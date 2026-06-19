@@ -1,6 +1,24 @@
 # 🔎 Code Discovery Toolkit
 
-Um conjunto de guia, prompts e script para ajudar times de produto e desenvolvimento a investigar repositórios esquecidos — sem inventar suposições, sem refatorar sem autorização e sem perder o foco do que foi pedido.
+Um jeito estruturado de entender repositórios de código esquecidos e investigar código morto, duplicado ou redundante — sem inventar suposições, sem refatorar sem autorização e sem perder o foco do que foi pedido.
+
+## Nunca viu nada parecido? Comece aqui
+
+Se você chegou nesse repositório e pensou "eu nem sei por onde começar", relaxa — você não precisa saber programar pra usar a parte principal disso. São só 4 passos:
+
+1. Abra a pasta [`prompts/`](prompts/) e clique no arquivo `01-mapeamento-inicial.md`.
+2. Copie o texto que está dentro do bloco cinza (o "código").
+3. Cole esse texto numa conversa com uma IA (Claude, ChatGPT, etc.), junto com informações do repositório que você quer entender — pode ser o README dele, ou até um print da estrutura de pastas.
+4. Siga a conversa. A própria IA vai te perguntar o que você quer investigar (tudo, ou só uma parte) e onde quer salvar o resultado.
+
+Depois desse primeiro contato, vale ler o resto deste README com mais calma pra entender a lógica completa.
+
+## Pra quem é isso
+
+- Você é PM/PO e te pediram pra entender um sistema antigo que ninguém mais lembra o que faz? É pra você.
+- Você é dev e quer investigar um repositório legado sem o risco de alguém (ou alguma IA) sair refatorando por engano? Também é pra você.
+
+Nenhuma das duas situações exige saber git, GitHub ou programação — isso só entra em jogo se você quiser usar o script de automação (`scripts/`), que é opcional.
 
 ## O problema
 
@@ -12,13 +30,13 @@ Esse toolkit não nasceu de um exercício teórico. Ele resume uma prática real
 
 ## O que tem aqui
 
-| Pasta | Conteúdo |
-|---|---|
-| `docs/` | Metodologia passo a passo e os princípios (guardrails) do processo |
-| `prompts/` | Prompts prontos para usar com qualquer assistente de IA durante o discovery |
-| `scripts/` | Script Python somente leitura que levanta candidatos a duplicação, inatividade e código não referenciado |
-| `templates/` | Template de relatório final para registrar os achados |
-| `examples/` | Exemplo real de relatório gerado pelo script (rodado neste próprio repositório) |
+| Pasta | Conteúdo | Precisa saber programar? |
+|---|---|---|
+| `prompts/` | Textos prontos para colar numa IA e conduzir o discovery | Não |
+| `docs/` | O passo a passo completo e os princípios do processo | Não |
+| `templates/` | Um modelo de relatório final pra preencher com os achados | Não |
+| `examples/` | Um exemplo real de relatório gerado pelo script | Não |
+| `scripts/` | Um programa em Python que automatiza parte da varredura | Sim (opcional) |
 
 ## Princípios não negociáveis
 
@@ -28,18 +46,26 @@ Esse toolkit não nasceu de um exercício teórico. Ele resume uma prática real
 
 Detalhes completos em [`docs/principios.md`](docs/principios.md).
 
-## Como usar
+## Como usar (passo a passo completo)
 
 1. Leia o passo a passo em [`docs/metodologia.md`](docs/metodologia.md).
-2. Rode o script de varredura (somente leitura, sem dependências externas — só Python 3.8+):
+2. Se alguém do seu time souber programar, pode rodar o script de varredura (somente leitura, sem dependências externas — só Python 3.8+):
    ```bash
    python scripts/analisar_repositorio.py /caminho/do/repositorio --saida relatorio-discovery.md
    ```
-3. Use os prompts em [`prompts/`](prompts/) para investigar os candidatos levantados com mais profundidade. Cada prompt primeiro faz uma leitura leve, depois pergunta o escopo desejado (tudo, um módulo, uma função ou um campo) e onde salvar o resultado, antes de aprofundar — isso evita gastar tokens analisando mais do que você realmente precisa.
+3. Use os prompts em [`prompts/`](prompts/) para investigar com mais profundidade — com ou sem a saída do script. Cada prompt primeiro faz uma leitura leve, depois pergunta o escopo desejado (tudo, um módulo, uma função ou um campo) e onde salvar o resultado, antes de aprofundar. Isso evita gastar tempo (e tokens, se estiver usando IA) analisando mais do que você realmente precisa.
 4. Preencha o [`templates/relatorio-discovery-template.md`](templates/relatorio-discovery-template.md) com os achados.
 5. Apresente o relatório para o time decidir os próximos passos — esse toolkit nunca decide por você.
 
 Veja um exemplo real de saída em [`examples/relatorio-exemplo.md`](examples/relatorio-exemplo.md), gerado rodando o próprio script neste repositório.
+
+## Glossário rápido
+
+- **Discovery**: o processo de investigar e entender algo — nesse caso, um repositório de código — antes de decidir o que fazer com ele.
+- **Código morto**: trecho de código que parece não ser mais usado por nada no sistema.
+- **Escopo**: o tamanho do que está sendo investigado — pode ser o repositório inteiro, um módulo, uma função ou um campo específico.
+- **Heurística**: uma regra prática que indica uma possibilidade, mas não garante 100%. Por isso todo achado aqui é tratado como candidato, nunca como verdade absoluta.
+- **Repositório**: a "pasta" onde o código de um sistema fica guardado e versionado (nesse caso, no GitHub).
 
 ## Limitações (de propósito)
 
