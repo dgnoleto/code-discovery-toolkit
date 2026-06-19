@@ -25,3 +25,7 @@ Todo relatório final deve indicar claramente o nível de confiança de cada ach
 ## 5. Entregar recomendações, não decisões
 
 O resultado de um discovery é uma lista de candidatos e perguntas para o time decidir — nunca uma ação já tomada. Quem decide o que fazer com o código é sempre o time responsável por ele.
+
+## 6. Confirmar escopo e destino antes de aprofundar
+
+Antes de fazer uma leitura profunda do código (o que consome tempo e tokens), os prompts deste toolkit primeiro fazem uma varredura leve, perguntam qual o escopo desejado (tudo, um módulo, uma função ou um campo específico) e onde o resultado deve ser salvo. Isso evita análises caras e desnecessárias quando só uma parte pequena do repositório precisava ser investigada, e transforma "não sair do foco" em uma confirmação explícita — não em uma suposição.

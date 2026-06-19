@@ -35,7 +35,7 @@ Detalhes completos em [`docs/principios.md`](docs/principios.md).
    ```bash
    python scripts/analisar_repositorio.py /caminho/do/repositorio --saida relatorio-discovery.md
    ```
-3. Use os prompts em [`prompts/`](prompts/) para investigar os candidatos levantados com mais profundidade.
+3. Use os prompts em [`prompts/`](prompts/) para investigar os candidatos levantados com mais profundidade. Cada prompt primeiro faz uma leitura leve, depois pergunta o escopo desejado (tudo, um módulo, uma função ou um campo) e onde salvar o resultado, antes de aprofundar — isso evita gastar tokens analisando mais do que você realmente precisa.
 4. Preencha o [`templates/relatorio-discovery-template.md`](templates/relatorio-discovery-template.md) com os achados.
 5. Apresente o relatório para o time decidir os próximos passos — esse toolkit nunca decide por você.
 
