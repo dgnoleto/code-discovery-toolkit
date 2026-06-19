@@ -6,6 +6,10 @@ Um conjunto de guia, prompts e script para ajudar times de produto e desenvolvim
 
 Toda empresa tem aquele repositório que ninguém lembra exatamente o que faz, ou aquele código que parece morto, duplicado ou redundante, mas que ninguém tem coragem de tocar porque "e se quebrar alguma coisa?". Esse toolkit existe para dar estrutura a esse tipo de investigação — feita por uma pessoa, por um time, ou com ajuda de um assistente de IA.
 
+## De onde isso vem
+
+Esse toolkit não nasceu de um exercício teórico. Ele resume uma prática real de discovery técnico assistido por IA aplicada em ecossistemas de produto B2B complexos: uso de frameworks de arquitetura de decisão para impedir refatorações automatizadas não autorizadas, mapeamento de dependências em sistemas legados sem histórico ativo, e recuperação de regras de negócio críticas documentadas do zero. A diferença aqui é que o processo foi generalizado e organizado para qualquer time poder aplicar, sem expor nenhum dado específico de cliente, projeto ou empresa.
+
 ## O que tem aqui
 
 | Pasta | Conteúdo |
@@ -40,6 +44,11 @@ Veja um exemplo real de saída em [`examples/relatorio-exemplo.md`](examples/rel
 ## Limitações (de propósito)
 
 Esse toolkit é feito de heurísticas, não de verdades absolutas. Ele aponta candidatos para investigação humana — nunca executa, apaga ou modifica nada automaticamente. Quanto mais contexto humano for adicionado durante o processo, melhor o resultado.
+
+## Autor
+
+Feito por **Danilo Nolêto**, Product Manager com prática em discovery técnico assistido por IA, governança de IA aplicada à engenharia de requisitos e recuperação de sistemas legados.
+[LinkedIn](https://linkedin.com/in/danilog-noleto)
 
 ## Licença
 
