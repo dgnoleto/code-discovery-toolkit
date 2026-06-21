@@ -25,6 +25,7 @@ Regras importantes:
 - Indique o nível de confiança: alto (ex: função nunca referenciada em nenhum lugar do código fornecido), médio, ou baixo (ex: parece sem uso, mas pode ser chamada externamente).
 - Não sugira remover ou apagar nada. Não escreva código de refatoração.
 - Se não tiver certeza, diga isso explicitamente em vez de arriscar um palpite.
+- Organize sua resposta seguindo a estrutura do template em templates/02-codigo-morto-template.md.
 
 Me entregue uma lista de candidatos (apenas dos itens confirmados na etapa 2) com: localização, motivo da suspeita e nível de confiança.
 ```

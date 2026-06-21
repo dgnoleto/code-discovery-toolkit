@@ -24,6 +24,7 @@ Regras importantes:
 - Para cada duplicação encontrada, diga onde está cada ocorrência (arquivo/função/linha aproximada).
 - Não proponha a solução de unificação ainda — apenas identifique e descreva a duplicação. A decisão de unificar (e como) é do time.
 - Se a duplicação parecer intencional (ex: por isolamento entre módulos), avise isso também.
+- Organize sua resposta seguindo a estrutura do template em templates/03-duplicacoes-template.md.
 
 Me entregue uma lista de duplicações/redundâncias encontradas (apenas do escopo confirmado na etapa 2), com localização e uma breve explicação do porquê parecem duplicadas.
 ```

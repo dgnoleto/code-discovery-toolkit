@@ -23,6 +23,7 @@ Regras importantes:
 - Baseie toda conclusão apenas no que eu te forneci. Se faltar informação para responder algo, diga claramente "não há evidência suficiente" em vez de supor.
 - Não sugira refatorações, melhorias ou remoções de código nesta etapa — o objetivo aqui é só entender, não mudar nada.
 - Separe claramente o que é fato (está escrito no código/commits) do que é sua interpretação.
+- Organize sua resposta seguindo a estrutura do template em templates/01-mapeamento-template.md.
 
 Me entregue:
 1. Um resumo do que esse repositório (ou o escopo escolhido) parece fazer, e com que nível de confiança.

@@ -34,7 +34,7 @@ Esse toolkit não nasceu de um exercício teórico. Ele resume uma prática real
 |---|---|---|
 | `prompts/` | Textos prontos para colar numa IA e conduzir o discovery | Não |
 | `docs/` | O passo a passo completo e os princípios do processo | Não |
-| `templates/` | Um modelo de relatório final pra preencher com os achados | Não |
+| `templates/` | Quatro templates: mapeamento, código morto, duplicações, e o relatório final que junta os três | Não |
 | `examples/` | Um exemplo real de relatório gerado pelo script | Não |
 | `scripts/` | Um programa em Python que automatiza parte da varredura | Sim (opcional) |
 
@@ -54,8 +54,9 @@ Detalhes completos em [`docs/principios.md`](docs/principios.md).
    python scripts/analisar_repositorio.py /caminho/do/repositorio --saida relatorio-discovery.md
    ```
 3. Use os prompts em [`prompts/`](prompts/) para investigar com mais profundidade — com ou sem a saída do script. Cada prompt primeiro faz uma leitura leve, depois pergunta o escopo desejado (tudo, um módulo, uma função ou um campo) e onde salvar o resultado, antes de aprofundar. Isso evita gastar tempo (e tokens, se estiver usando IA) analisando mais do que você realmente precisa.
-4. Preencha o [`templates/relatorio-discovery-template.md`](templates/relatorio-discovery-template.md) com os achados.
-5. Apresente o relatório para o time decidir os próximos passos — esse toolkit nunca decide por você.
+4. Cada prompt te aponta pro template certo: [`01-mapeamento-template.md`](templates/01-mapeamento-template.md), [`02-codigo-morto-template.md`](templates/02-codigo-morto-template.md) e [`03-duplicacoes-template.md`](templates/03-duplicacoes-template.md). Preencha o template correspondente com os achados de cada etapa.
+5. Use o prompt [`04-relatorio-final.md`](prompts/04-relatorio-final.md) pra juntar os três templates preenchidos no [`04-relatorio-final-template.md`](templates/04-relatorio-final-template.md).
+6. Apresente o relatório para o time decidir os próximos passos — esse toolkit nunca decide por você.
 
 Veja um exemplo real de saída em [`examples/relatorio-exemplo.md`](examples/relatorio-exemplo.md), gerado rodando o próprio script neste repositório.
 

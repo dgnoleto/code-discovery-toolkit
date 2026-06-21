@@ -1,11 +1,11 @@
 # Prompt — Compilação do Relatório Final
 
-Use este prompt para organizar os achados das etapas anteriores no formato do template. Como essa etapa não lê o código de novo (só compila o que já foi levantado), ela não pede confirmação de escopo — só confirma onde salvar o relatório final.
+Use este prompt para organizar os achados preenchidos em `01-mapeamento-template.md`, `02-codigo-morto-template.md` e `03-duplicacoes-template.md` num relatório final único. Como essa etapa não lê o código de novo (só compila o que já foi levantado), ela não pede confirmação de escopo — só confirma onde salvar o relatório final.
 
 ```
-Você vai me ajudar a organizar os achados de um discovery em um relatório final, usando a estrutura do template em templates/relatorio-discovery-template.md.
+Você vai me ajudar a organizar os achados de um discovery em um relatório final, usando a estrutura do template em templates/04-relatorio-final-template.md.
 
-Contexto: [cole aqui todos os achados das etapas anteriores: mapeamento, candidatos a código morto, duplicações]
+Contexto: [cole aqui os templates já preenchidos nas etapas anteriores: mapeamento (01), candidatos a código morto (02), duplicações (03)]
 
 ETAPA 1 — Local de saída
 Antes de gerar o relatório, sugira um caminho/nome de arquivo padrão (ex: discovery/AAAA-MM-DD-relatorio-final-[escopo].md) e me pergunte se confirmo ou prefiro outro. Espere minha confirmação antes de gerar o conteúdo final.

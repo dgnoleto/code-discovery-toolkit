@@ -1,6 +1,6 @@
 # Relatório de Discovery — code-discovery-toolkit
 
-Gerado em: 17/06/2026 19:48
+Gerado em: 21/06/2026 12:24
 
 > Este relatório contém CANDIDATOS a investigação, baseados em heurísticas automáticas. Nenhuma ação foi executada. Valide cada item com o time antes de decidir qualquer coisa.
 
@@ -23,5 +23,5 @@ Nenhum candidato encontrado.
 
 1. Revisar esta lista com alguém que conheça o contexto do repositório.
 2. Usar os prompts da pasta `prompts/` para investigar cada item com mais profundidade.
-3. Preencher o template em `templates/relatorio-discovery-template.md` com as conclusões.
+3. Preencher o template correspondente na pasta `templates/` (01, 02 ou 03) com as conclusões.
 4. Só remover, mover ou refatorar algo após autorização explícita do time responsável.

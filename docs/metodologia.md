@@ -13,7 +13,7 @@ Use este guia para investigar um repositório que ninguém lembra mais o propós
 - Leia o README e qualquer documentação existente (mesmo que desatualizada).
 - Liste linguagens, frameworks e dependências principais.
 - Veja quem são os principais contribuidores e quando foi o último commit relevante.
-- Use o prompt [`prompts/01-mapeamento-inicial.md`](../prompts/01-mapeamento-inicial.md) para apoiar essa etapa com IA.
+- Use o prompt [`prompts/01-mapeamento-inicial.md`](../prompts/01-mapeamento-inicial.md) para apoiar essa etapa com IA, registrando o resultado no template [`templates/01-mapeamento-template.md`](../templates/01-mapeamento-template.md).
 
 ## Etapa 2 — Entendimento do propósito original
 
@@ -28,7 +28,7 @@ Use este guia para investigar um repositório que ninguém lembra mais o propós
 
 ## Etapa 4 — Identificação de código morto, duplicado ou redundante
 
-- Use os prompts [`prompts/02-codigo-morto.md`](../prompts/02-codigo-morto.md) e [`prompts/03-duplicacoes-redundancias.md`](../prompts/03-duplicacoes-redundancias.md) junto com a saída do script para investigar cada candidato com mais contexto.
+- Use os prompts [`prompts/02-codigo-morto.md`](../prompts/02-codigo-morto.md) e [`prompts/03-duplicacoes-redundancias.md`](../prompts/03-duplicacoes-redundancias.md) junto com a saída do script para investigar cada candidato com mais contexto, registrando cada um nos templates [`templates/02-codigo-morto-template.md`](../templates/02-codigo-morto-template.md) e [`templates/03-duplicacoes-template.md`](../templates/03-duplicacoes-template.md).
 - Para cada candidato, registre: onde está (arquivo/linha), por que é candidato, e qual evidência sustenta isso.
 
 ## Etapa 5 — Validação com o time
@@ -39,6 +39,5 @@ Use este guia para investigar um repositório que ninguém lembra mais o propós
 
 ## Etapa 6 — Relatório final
 
-- Use o prompt [`prompts/04-relatorio-final.md`](../prompts/04-relatorio-final.md) para compilar tudo no formato do template.
-- Preencha o template [`templates/relatorio-discovery-template.md`](../templates/relatorio-discovery-template.md) com os achados confirmados, prováveis e hipóteses.
+- Use o prompt [`prompts/04-relatorio-final.md`](../prompts/04-relatorio-final.md) para compilar os três templates anteriores no template final [`templates/04-relatorio-final-template.md`](../templates/04-relatorio-final-template.md), com os achados confirmados, prováveis e hipóteses.
 - Entregue o relatório como uma recomendação para o time decidir os próximos passos.
