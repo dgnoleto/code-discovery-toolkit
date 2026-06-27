@@ -20,6 +20,8 @@ Depois desse primeiro contato, vale ler o resto deste README com mais calma pra 
 
 Nenhuma das duas situações exige saber git, GitHub ou programação — isso só entra em jogo se você quiser usar o script de automação (`scripts/`), que é opcional.
 
+Se você usa Claude Code no dia a dia e quer essa metodologia de forma autônoma (sem copiar e colar prompt nenhum), veja o repositório irmão [Claude Code para PM/PO](https://github.com/SEU-USUARIO/claude-code-for-pm), que traz a mesma lógica como uma Skill real.
+
 ## O problema
 
 Toda empresa tem aquele repositório que ninguém lembra exatamente o que faz, ou aquele código que parece morto, duplicado ou redundante, mas que ninguém tem coragem de tocar porque "e se quebrar alguma coisa?". Esse toolkit existe para dar estrutura a esse tipo de investigação — feita por uma pessoa, por um time, ou com ajuda de um assistente de IA.
@@ -67,6 +69,10 @@ Veja um exemplo real de saída em [`examples/relatorio-exemplo.md`](examples/rel
 - **Escopo**: o tamanho do que está sendo investigado — pode ser o repositório inteiro, um módulo, uma função ou um campo específico.
 - **Heurística**: uma regra prática que indica uma possibilidade, mas não garante 100%. Por isso todo achado aqui é tratado como candidato, nunca como verdade absoluta.
 - **Repositório**: a "pasta" onde o código de um sistema fica guardado e versionado (nesse caso, no GitHub).
+
+## Inspirações e referências
+
+- [**llm-council**](https://github.com/karpathy/llm-council) (Andrej Karpathy) — inspirou a ideia de, em achados críticos, validar a conclusão cruzando respostas de mais de uma IA antes de tratá-la como confirmada, em vez de confiar numa única resposta.
 
 ## Limitações (de propósito)
 
