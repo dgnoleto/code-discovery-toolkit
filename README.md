@@ -32,13 +32,14 @@ Esse toolkit não nasceu de um exercício teórico. Ele resume uma prática real
 
 ## O que tem aqui
 
-| Pasta | Conteúdo | Precisa saber programar? |
-|---|---|---|
-| `prompts/` | Textos prontos para colar numa IA e conduzir o discovery | Não |
-| `docs/` | O passo a passo completo e os princípios do processo | Não |
-| `templates/` | Quatro templates: mapeamento, código morto, duplicações, e o relatório final que junta os três | Não |
-| `examples/` | Um exemplo real de relatório gerado pelo script | Não |
-| `scripts/` | Um programa em Python que automatiza parte da varredura | Sim (opcional) |
+| Pasta                                    | Conteúdo                                                                                                                                                                | Precisa saber programar? |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| `prompts/`                               | Textos prontos para colar numa IA e conduzir o discovery                                                                                                                | Não                      |
+| `docs/`                                  | O passo a passo completo e os princípios do processo                                                                                                                    | Não                      |
+| `templates/`                             | Quatro templates: mapeamento, código morto, duplicações, e o relatório final que junta os três                                                                          | Não                      |
+| `examples/`                              | Um exemplo real de relatório gerado pelo script                                                                                                                         | Não                      |
+| `scripts/`                               | Um programa em Python que automatiza parte da varredura                                                                                                                 | Sim (opcional)           |
+| `templates/AGENTS-discovery-template.md` | Template de `AGENTS.md` para colocar na raiz do repositório investigado — ativa o modo discovery em qualquer ferramenta compatível (Claude Code, Cursor, Copilot, etc.) | Não                      |
 
 ## Princípios não negociáveis
 
@@ -55,6 +56,8 @@ Detalhes completos em [`docs/principios.md`](docs/principios.md).
    ```bash
    python scripts/analisar_repositorio.py /caminho/do/repositorio --saida relatorio-discovery.md
    ```
+   > **Alternativa para equipes que usam Claude Code, Cursor ou Copilot:**
+> 	Copie o [`templates/AGENTS-discovery-template.md`](templates/AGENTS-discovery-template.md) para a raiz do repositório que você quer investigar, renomeie para `AGENTS.md`, e abra o repositório na sua ferramenta. Ela vai carregar as regras automaticamente — sem precisar copiar e colar prompt nenhum.
 3. Use os prompts em [`prompts/`](prompts/) para investigar com mais profundidade — com ou sem a saída do script. Cada prompt primeiro faz uma leitura leve, depois pergunta o escopo desejado (tudo, um módulo, uma função ou um campo) e onde salvar o resultado, antes de aprofundar. Isso evita gastar tempo (e tokens, se estiver usando IA) analisando mais do que você realmente precisa.
 4. Cada prompt te aponta pro template certo: [`01-mapeamento-template.md`](templates/01-mapeamento-template.md), [`02-codigo-morto-template.md`](templates/02-codigo-morto-template.md) e [`03-duplicacoes-template.md`](templates/03-duplicacoes-template.md). Preencha o template correspondente com os achados de cada etapa.
 5. Use o prompt [`04-relatorio-final.md`](prompts/04-relatorio-final.md) pra juntar os três templates preenchidos no [`04-relatorio-final-template.md`](templates/04-relatorio-final-template.md).
@@ -73,6 +76,7 @@ Veja um exemplo real de saída em [`examples/relatorio-exemplo.md`](examples/rel
 ## Inspirações e referências
 
 - [**llm-council**](https://github.com/karpathy/llm-council) (Andrej Karpathy) — inspirou a ideia de, em achados críticos, validar a conclusão cruzando respostas de mais de uma IA antes de tratá-la como confirmada, em vez de confiar numa única resposta.
+-  [**agency-agents-app**](https://github.com/msitarzewski/agency-agents-app) — inspirou o template `AGENTS-discovery-template.md`: o formato AGENTS.md e o conceito de "Approval Gates" (gate humano obrigatório antes de qualquer ação de escrita) foram adaptados para criar uma terceira porta de entrada para a metodologia de discovery, compatível com qualquer ferramenta agêntica.
 
 ## Limitações (de propósito)
 
