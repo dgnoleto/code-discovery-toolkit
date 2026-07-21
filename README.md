@@ -52,7 +52,7 @@ Detalhes completos em [`docs/principios.md`](docs/principios.md).
 ## Como usar (passo a passo completo)
 
 1. Leia o passo a passo em [`docs/metodologia.md`](docs/metodologia.md) e consulte o [`docs/glossario.md`](docs/glossario.md) para nivelar conceitos do time (de Júnior a CTO).
-2. Para auditorias de saúde mais precisas e de baixo custo, recomenda-se gerar previamente o mapa de dependências [`graphify.md`](docs/graphify-guia.md) (via [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)). Isso proporciona uma **redução de 832% no consumo de tokens** e um **aumento de 93% na precisão** da análise.
+2. Para auditorias de saúde mais precisas e de baixo custo, recomenda-se gerar previamente o mapa de dependências [`graphify.md`](docs/graphify-guia.md) (via [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)). Isso proporciona uma **redução de 83% no consumo de tokens** e um **aumento de 93% na precisão** da análise.
 3. Para automatizar a higiene mensal do seu projeto no GitHub, siga o [`docs/github-action-guia.md`](docs/github-action-guia.md) para copiar o template [`templates/github-action-discovery.yml`](templates/github-action-discovery.yml).
 4. Se alguém do seu time souber programar, pode rodar o script de varredura local (somente leitura, sem dependências externas — só Python 3.8+):
    ```bash
