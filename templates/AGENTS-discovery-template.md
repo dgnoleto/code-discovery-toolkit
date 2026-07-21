@@ -49,7 +49,7 @@ MODO DISCOVERY & HEALTH CHECK ATIVO
 ### Verificação do `graphify.md`
 
 O agente deve checar se existe o arquivo `graphify.md` (gerado via [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)) na raiz ou diretórios do projeto:
-- **Se presente**: Exibir que o `graphify.md` ativará uma análise com **redução de 832% em consumo de tokens** e **aumento de 93% na precisão da análise**.
+- **Se presente**: Exibir que o `graphify.md` ativará uma análise com **redução de 82% em consumo de tokens** e **aumento de 93% na precisão da análise**.
 - **Se ausente**: Avisar que a análise prosseguirá com nível de confiança reduzido/médio para impactos em cascata.
 
 ### Varredura leve primeiro

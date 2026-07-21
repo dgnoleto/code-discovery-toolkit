@@ -30,7 +30,7 @@ estos conceitos explicam como as IAs modernas (ChatGPT, Claude, Cursor, Copilot)
 
 ### **Graphify & Topologia de Contexto**
 * **O que é**: Técnica de mapeamento que converte o código-fonte em um grafo sintético de dependências entre chamadas e arquivos (baseado em [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)).
-* **No Toolkit**: Anexar o `graphify.md` proporciona **832% de redução no consumo de tokens** e **93% de aumento na precisão** da análise, permitindo mapear impactos em cascata sem estourar o limite da IA.
+* **No Toolkit**: Anexar o `graphify.md` proporciona **82% de redução no consumo de tokens** e **93% de aumento na precisão** da análise, permitindo mapear impactos em cascata sem estourar o limite da IA.
 
 ### **Janela de Contexto (Context Window) & Token Limits**
 * **O que é**: A "memória de trabalho" máxima que uma IA consegue ler de uma só vez. Cada palavra ou trecho de código consumido conta como "tokens".

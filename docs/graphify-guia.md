@@ -12,7 +12,7 @@ No contexto do **Code Discovery Toolkit**, o arquivo gerado (geralmente nomeado 
 
 Ao realizar auditorias de código ou investigações de dependências em repositórios legados de sistemas SaaS, o uso do `graphify.md` traz dois benefícios fundamentais:
 
-1. **Redução de 832% no Consumo de Tokens**:
+1. **Redução de 82% no Consumo de Tokens**:
    Em vez de exigir que a IA leia e processe milhares de linhas de código-fonte bruto para descobrir quem chama o quê, o `graphify.md` fornece a estrutura sintética de conexões. Isso reduz radicalmente a janela de contexto utilizada e o custo financeiro/tempo da análise.
 
 2. **Aumento de 93% na Precisão da Análise**:

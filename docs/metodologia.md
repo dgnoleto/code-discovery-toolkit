@@ -33,7 +33,7 @@ Use este guia para investigar um repositório que ninguém lembra mais o propós
 
 ## Etapa 5 — Health Check e Prontidão de Escala (Auditoria de Saúde)
 
-- Recomenda-se gerar o mapa de dependências [`graphify.md`](graphify-guia.md) (via [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)) para reduzir o consumo de tokens em 832% e aumentar a precisão da análise em 93%.
+- Recomenda-se gerar o mapa de dependências [`graphify.md`](graphify-guia.md) (via [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)) para reduzir o consumo de tokens em 82% e aumentar a precisão da análise em 93%.
 - Use o prompt [`prompts/05-health-check.md`](../prompts/05-health-check.md) para realizar uma auditoria de saúde do código (passando pelos gates de confirmação de escopo: Função, Módulo ou Geral).
 - Mapeie bandeiras vermelhas: pontas soltas, redundâncias, inconsistência/incompatibilidade de tipos de dados (ex: `string` vs `int`) e riscos de estouro de escala com alto volume de dados.
 - O resultado deve ser consolidado no template [`templates/05-health-check-template.md`](../templates/05-health-check-template.md), contendo sugestões limpas desacopladas e justificativas de Clean Code — **sem nunca implementar ou alterar nada no código diretamente**.

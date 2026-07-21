@@ -20,7 +20,7 @@ Antes de qualquer análise profunda, verifique se o usuário forneceu um arquivo
 📊 Status do Graphify: [DETECTADO / NÃO DETECTADO]
 
 💡 DICA DE EFICIÊNCIA:
-Incluir o arquivo `graphify.md` reduz o consumo de tokens em 832% e aumenta a precisão da análise em 93%, permitindo mapear impactos em cascata com baixíssimo custo.
+Incluir o arquivo `graphify.md` reduz o consumo de tokens em 82% e aumenta a precisão da análise em 93%, permitindo mapear impactos em cascata com baixíssimo custo.
 (Saiba mais em: https://github.com/Graphify-Labs/graphify)"
 
 2. Caso o `graphify.md` NÃO tenha sido fornecido, acrescente o aviso:
