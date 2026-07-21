@@ -32,11 +32,11 @@ Esse toolkit não nasceu de um exercício teórico. Ele resume uma prática real
 
 ## O que tem aqui
 
-| Pasta                                    | Conteúdo                                                                                                                                                                | Precisa saber programar? |
+| Pasta / Arquivo                          | Conteúdo                                                                                                                                                                | Precisa saber programar? |
 | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
 | `prompts/`                               | Textos prontos para colar numa IA e conduzir o discovery e o Health Check (`05-health-check.md`)                                                                       | Não                      |
-| `docs/`                                  | O passo a passo completo, princípios do processo e o guia de integração com o Graphify (`graphify-guia.md`)                                                            | Não                      |
-| `templates/`                             | Cinco templates: mapeamento, código morto, duplicações, health check e o relatório final                                                                                | Não                      |
+| `docs/`                                  | O passo a passo completo, [Glossário de IA & Arquitetura](docs/glossario.md), guia do Graphify (`graphify-guia.md`) e guia da [GitHub Action](docs/github-action-guia.md) | Não                      |
+| `templates/`                             | Templates de relatórios e a [GitHub Action Reutilizável](templates/github-action-discovery.yml) para automação mensal                                                   | Não                      |
 | `examples/`                              | Um exemplo real de relatório gerado pelo script                                                                                                                         | Não                      |
 | `scripts/`                               | Um programa em Python que automatiza parte da varredura                                                                                                                 | Sim (opcional)           |
 | `templates/AGENTS-discovery-template.md` | Template de `AGENTS.md` para colocar na raiz do repositório investigado — ativa o modo discovery/health check em ferramentas como Claude Code, Cursor, Copilot, etc.    | Não                      |
@@ -51,30 +51,27 @@ Detalhes completos em [`docs/principios.md`](docs/principios.md).
 
 ## Como usar (passo a passo completo)
 
-1. Leia o passo a passo em [`docs/metodologia.md`](docs/metodologia.md).
+1. Leia o passo a passo em [`docs/metodologia.md`](docs/metodologia.md) e consulte o [`docs/glossario.md`](docs/glossario.md) para nivelar conceitos do time (de Júnior a CTO).
 2. Para auditorias de saúde mais precisas e de baixo custo, recomenda-se gerar previamente o mapa de dependências [`graphify.md`](docs/graphify-guia.md) (via [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)). Isso proporciona uma **redução de 832% no consumo de tokens** e um **aumento de 93% na precisão** da análise.
-3. Se alguém do seu time souber programar, pode rodar o script de varredura (somente leitura, sem dependências externas — só Python 3.8+):
+3. Para automatizar a higiene mensal do seu projeto no GitHub, siga o [`docs/github-action-guia.md`](docs/github-action-guia.md) para copiar o template [`templates/github-action-discovery.yml`](templates/github-action-discovery.yml).
+4. Se alguém do seu time souber programar, pode rodar o script de varredura local (somente leitura, sem dependências externas — só Python 3.8+):
    ```bash
    python scripts/analisar_repositorio.py /caminho/do/repositorio --saida relatorio-discovery.md
    ```
    > **Alternativa para equipes que usam Claude Code, Cursor ou Copilot:**
 > 	Copie o [`templates/AGENTS-discovery-template.md`](templates/AGENTS-discovery-template.md) para a raiz do repositório que você quer investigar, renomeie para `AGENTS.md`, e abra o repositório na sua ferramenta. Ela vai carregar as regras automaticamente — sem precisar copiar e colar prompt nenhum.
-4. Use os prompts em [`prompts/`](prompts/) para investigar com mais profundidade — incluindo o [`05-health-check.md`](prompts/05-health-check.md) para levantamento de bandeiras vermelhas (pontas soltas, redundâncias, inconsistências de tipo de dados e gargalos de escalabilidade).
-5. Cada prompt te aponta pro template certo em [`templates/`](templates/). Preencha o template correspondente com os achados de cada etapa.
-6. Use o prompt [`04-relatorio-final.md`](prompts/04-relatorio-final.md) pra juntar os templates no [`04-relatorio-final-template.md`](templates/04-relatorio-final-template.md).
-7. Apresente o relatório para o time decidir os próximos passos — esse toolkit nunca decide por você e nunca aplica alterações no código automaticamente.
+5. Use os prompts em [`prompts/`](prompts/) para investigar com mais profundidade — incluindo o [`05-health-check.md`](prompts/05-health-check.md) para levantamento de bandeiras vermelhas (pontas soltas, redundâncias, inconsistências de tipo de dados e gargalos de escalabilidade).
+6. Cada prompt te aponta pro template certo em [`templates/`](templates/). Preencha o template correspondente com os achados de cada etapa.
+7. Use o prompt [`04-relatorio-final.md`](prompts/04-relatorio-final.md) pra juntar os templates no [`04-relatorio-final-template.md`](templates/04-relatorio-final-template.md).
+8. Apresente o relatório para o time decidir os próximos passos — esse toolkit nunca decide por você e nunca aplica alterações no código automaticamente.
 
 Veja um exemplo real de saída em [`examples/relatorio-exemplo.md`](examples/relatorio-exemplo.md), gerado rodando o próprio script neste repositório.
 
-## Glossário rápido
+## Glossário & Conceitos
 
-- **Discovery**: o processo de investigar e entender algo — nesse caso, um repositório de código — antes de decidir o que fazer com ele.
-- **Health Check**: auditoria de saúde do código para identificar pontas soltas, inconsistências de tipo de dados, oportunidades de Clean Code e gargalos de volume de dados.
-- **Graphify**: ferramenta open-source para geração de grafos de contexto e dependências entre arquivos.
-- **Código morto**: trecho de código que parece não ser mais usado por nada no sistema.
-- **Escopo**: o tamanho do que está sendo investigado — pode ser o repositório inteiro, um módulo, uma função ou um campo específico.
-- **Heurística**: uma regra prática que indica uma possibilidade, mas não garante 100%. Por isso todo achado aqui é tratado como candidato, nunca como verdade absoluta.
-- **Repositório**: a "pasta" onde o código de um sistema fica guardado e versionado (nesse caso, no GitHub).
+Consulte o documento completo em **[`docs/glossario.md`](docs/glossario.md)** para explicações didáticas sobre:
+- **Conceitos de IA & Agentes**: LLM, RAG, Graphify, Chain-of-Verification (CoVE), Approval Gates, Human-in-the-Loop (HITL), Context Window, Análise Determinística vs Heurística, Read-Only Agent, MCP e AST.
+- **Conceitos de Engenharia & Produto**: Discovery Técnico, Débito Técnico, Código Morto, Code Smells, Inconsistência de Tipos de Dados e Clean Code.
 
 ## Inspirações e referências
 

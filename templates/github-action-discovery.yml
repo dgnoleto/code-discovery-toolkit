@@ -1,0 +1,58 @@
+name: Code Discovery & Hygiene Check
+
+on:
+  # Execução agendada (ex: Todo dia 1º de cada mês às 08:00 UTC)
+  schedule:
+    - cron: '0 8 1 * *'
+  
+  # Permite disparo manual diretamente pela aba Actions do GitHub
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  discovery-scan:
+    name: Executar Varredura de Discovery
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Garante o histórico completo de commits para checagem de git log
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Executar Script de Discovery
+        run: |
+          # Baixa ou executa o script do Code Discovery Toolkit
+          python scripts/analisar_repositorio.py ./ --saida relatorio-discovery.md --dias 365
+
+      - name: Publicar Relatório como Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-discovery-${{ github.sha }}
+          path: relatorio-discovery.md
+
+      - name: Criar Issue no GitHub com Achados de Código Parado (Opcional)
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            if (fs.existsSync('relatorio-discovery.md')) {
+              const report = fs.readFileSync('relatorio-discovery.md', 'utf8');
+              const title = `🔎 relatorio mensal de discovery & higiene — ${new Date().toISOString().split('T')[0]}`;
+              
+              // Cria uma Issue para o time revisar
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                body: "## Relatório Automático de Discovery\n\nEste relatório foi gerado automaticamente pelo **Code Discovery Toolkit**.\n\n" + report
+              });
+            }
