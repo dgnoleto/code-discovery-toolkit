@@ -29,3 +29,8 @@ O resultado de um discovery é uma lista de candidatos e perguntas para o time d
 ## 6. Confirmar escopo e destino antes de aprofundar
 
 Antes de fazer uma leitura profunda do código (o que consome tempo e tokens), os prompts deste toolkit primeiro fazem uma varredura leve, perguntam qual o escopo desejado (tudo, um módulo, uma função ou um campo específico) e onde o resultado deve ser salvo. Isso evita análises caras e desnecessárias quando só uma parte pequena do repositório precisava ser investigada, e transforma "não sair do foco" em uma confirmação explícita — não em uma suposição.
+
+## 7. Limitações técnicas dos Gates de IA
+
+Os "Approval Gates" e regras deste toolkit (incluindo o arquivo `AGENTS.md`) dependem de **Prompt Engineering** (obediência do modelo de linguagem às instruções fornecidas). Em execuções agênticas autônomas sem supervisão humana constante (como loops do Claude Code ou Cursor em modo autônomo), a IA pode eventualmente burlar ou ignorar essas diretivas se houver estouro de contexto ou instruções de sistema sobrepostas. Portanto, os gates funcionam como diretrizes comportamentais fortes, mas não substituem proteções físicas de infraestrutura (como permissões de escrita em branches protegidos e testes de CI).
+

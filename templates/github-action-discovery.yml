@@ -46,13 +46,23 @@ jobs:
             const fs = require('fs');
             if (fs.existsSync('relatorio-discovery.md')) {
               const report = fs.readFileSync('relatorio-discovery.md', 'utf8');
-              const title = `🔎 relatorio mensal de discovery & higiene — ${new Date().toISOString().split('T')[0]}`;
               
-              // Cria uma Issue para o time revisar
-              await github.rest.issues.create({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                title: title,
-                body: "## Relatório Automático de Discovery\n\nEste relatório foi gerado automaticamente pelo **Code Discovery Toolkit**.\n\n" + report
-              });
+              // Verifica se há linhas que iniciam com "- `" indicando achados reais listados
+              const hasFindings = report.split('\n').some(line => line.trim().startsWith('- `'));
+              
+              if (hasFindings) {
+                const title = `🔎 Relatório Mensal de Discovery & Higiene — ${new Date().toISOString().split('T')[0]}`;
+                
+                // Cria uma Issue para o time revisar
+                await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: title,
+                  body: "## Relatório Automático de Discovery\n\nEste relatório foi gerado automaticamente pelo **Code Discovery Toolkit**.\n\n" + report
+                });
+                console.log("Issue criada com os achados identificados.");
+              } else {
+                console.log("Nenhum achado de código pendente. Ignorando criação de Issue.");
+              }
             }
+

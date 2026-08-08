@@ -3,8 +3,8 @@
 Analisador de Discovery de Repositório (Code Discovery Toolkit)
 
 Este script faz uma varredura SOMENTE LEITURA em um repositório de código
-para levantar CANDIDATOS a investigação: arquivos duplicados, arquivos sem
-atividade recente no histórico do Git e arquivos que aparentam não ser
+para levantar CANDIDATOS a investigação: arquivos duplicados (idênticos e similares),
+arquivos sem atividade recente no histórico do Git e arquivos que aparentam não ser
 referenciados em nenhum outro lugar do código.
 
 IMPORTANTE:
@@ -19,8 +19,10 @@ Uso:
 """
 
 import argparse
+import difflib
 import hashlib
 import os
+import re
 import subprocess
 import sys
 from collections import defaultdict
@@ -70,6 +72,69 @@ def encontrar_duplicados_exatos(arquivos):
     return {h: lista for h, lista in por_hash.items() if len(lista) > 1}
 
 
+def encontrar_duplicados_similares(arquivos, threshold=0.9):
+    """
+    Compara arquivos de texto com extensões compatíveis e tamanhos semelhantes
+    para encontrar similaridade parcial (> threshold), ignorando arquivos 100% idênticos.
+    """
+    arquivos_texto = [
+        a for a in arquivos 
+        if a.is_file() and a.suffix in EXTENSOES_TEXTO
+    ]
+    
+    conteudos = {}
+    for a in arquivos_texto:
+        try:
+            # Pula arquivos muito grandes (> 250KB) para evitar lentidão extrema
+            if a.stat().st_size > 250000:
+                continue
+            txt = a.read_text(encoding="utf-8", errors="ignore")
+            if txt.strip():
+                conteudos[a] = txt
+        except OSError:
+            pass
+
+    duplicados_similares = []
+    lista_arquivos = list(conteudos.keys())
+    processados = set()
+
+    for i in range(len(lista_arquivos)):
+        file1 = lista_arquivos[i]
+        content1 = conteudos[file1]
+        len1 = len(content1)
+        if not len1:
+            continue
+
+        for j in range(i + 1, len(lista_arquivos)):
+            file2 = lista_arquivos[j]
+            content2 = conteudos[file2]
+            len2 = len(content2)
+            if not len2:
+                continue
+
+            # Só compara se o tamanho dos arquivos diferir em no máximo 20%
+            diff_ratio = abs(len1 - len2) / max(len1, len2)
+            if diff_ratio > 0.2:
+                continue
+
+            # Evita comparar se forem 100% idênticos (já pegos no hash exato)
+            if content1 == content2:
+                continue
+
+            # Calcula a razão de similaridade
+            matcher = difflib.SequenceMatcher(None, content1, content2)
+            ratio = matcher.real_quick_ratio()
+            if ratio >= threshold:
+                # real_quick_ratio é um limite superior rápido. Se passar, calculamos a similaridade real.
+                ratio = matcher.ratio()
+                if ratio >= threshold and ratio < 1.0:
+                    duplicados_similares.append((file1, file2, ratio))
+                    processados.add(file1)
+                    processados.add(file2)
+
+    return duplicados_similares
+
+
 def data_ultimo_commit(raiz: Path, arquivo: Path):
     try:
         resultado = subprocess.run(
@@ -98,10 +163,9 @@ def encontrar_arquivos_parados(raiz: Path, arquivos, dias_limite: int):
 
 def encontrar_possiveis_nao_referenciados(arquivos):
     """
-    Heurística simples: verifica se o NOME do arquivo (sem extensão) é
-    mencionado em algum outro arquivo de texto do repositório. Isso é
-    apenas um indício, não uma prova de que o arquivo não é usado em
-    nenhum lugar (pode haver chamadas dinâmicas, configs externas, etc).
+    Heurística de correspondência de palavras inteiras (usando limites \b no Regex)
+    para verificar se o nome de um arquivo (sem a extensão) é mencionado em outro
+    arquivo de texto. Mitiga falsos positivos com nomes comuns.
     """
     arquivos_codigo = [a for a in arquivos if a.suffix in EXTENSOES_TEXTO]
     conteudos = {}
@@ -114,19 +178,28 @@ def encontrar_possiveis_nao_referenciados(arquivos):
     suspeitos = []
     for arquivo in arquivos_codigo:
         nome_base = arquivo.stem
+        # Evita nomes extremamente curtos
         if len(nome_base) < 4:
-            continue  # nomes muito curtos geram falsos positivos
-        referenciado = any(
-            nome_base in conteudo
-            for outro, conteudo in conteudos.items()
-            if outro != arquivo
-        )
+            continue
+        
+        # Compila regex para buscar a palavra exata com limites de caractere (\b)
+        pattern = re.compile(r'\b' + re.escape(nome_base) + r'\b')
+        referenciado = False
+        
+        for outro, conteudo in conteudos.items():
+            if outro == arquivo:
+                continue
+            if pattern.search(conteudo):
+                referenciado = True
+                break
+                
         if not referenciado:
             suspeitos.append(arquivo)
+            
     return suspeitos
 
 
-def gerar_relatorio(raiz, duplicados, parados, suspeitos, dias_limite):
+def gerar_relatorio(raiz, duplicados, similares, parados, suspeitos, dias_limite, sim_threshold):
     linhas = [
         f"# Relatório de Discovery — {raiz.name}",
         "",
@@ -136,7 +209,7 @@ def gerar_relatorio(raiz, duplicados, parados, suspeitos, dias_limite):
         "heurísticas automáticas. Nenhuma ação foi executada. "
         "Valide cada item com o time antes de decidir qualquer coisa.",
         "",
-        "## 1. Arquivos duplicados (conteúdo idêntico)",
+        "## 1. Arquivos duplicados (conteúdo 100% idêntico)",
     ]
 
     if duplicados:
@@ -148,7 +221,18 @@ def gerar_relatorio(raiz, duplicados, parados, suspeitos, dias_limite):
         linhas.append("\nNenhum arquivo com conteúdo idêntico encontrado.")
 
     linhas.append("")
-    linhas.append(f"## 2. Arquivos sem commits há mais de {dias_limite} dias")
+    linhas.append(f"## 2. Arquivos altamente similares (similaridade >= {int(sim_threshold * 100)}%)")
+    linhas.append("\n_Detecção por difflib.SequenceMatcher — candidatos a redundância ou clonagem._\n")
+    if similares:
+        for f1, f2, ratio in similares:
+            linhas.append(
+                f"- `{f1.relative_to(raiz)}` <-> `{f2.relative_to(raiz)}` (similaridade: {ratio:.1%})"
+            )
+    else:
+        linhas.append("Nenhum arquivo com alta similaridade parcial encontrado.")
+
+    linhas.append("")
+    linhas.append(f"## 3. Arquivos sem commits há mais de {dias_limite} dias")
     if parados:
         for arquivo, data in sorted(parados, key=lambda x: x[1]):
             linhas.append(
@@ -158,8 +242,8 @@ def gerar_relatorio(raiz, duplicados, parados, suspeitos, dias_limite):
         linhas.append("\nNenhum arquivo parado encontrado (ou repositório sem histórico Git).")
 
     linhas.append("")
-    linhas.append("## 3. Arquivos possivelmente não referenciados em outro lugar")
-    linhas.append("\n_Heurística textual simples — confirme manualmente antes de concluir qualquer coisa._\n")
+    linhas.append("## 4. Arquivos possivelmente não referenciados em outro lugar")
+    linhas.append("\n_Heurística de palavra inteira (\\b) — confirme manualmente antes de concluir qualquer coisa._\n")
     if suspeitos:
         for arquivo in suspeitos:
             linhas.append(f"- `{arquivo.relative_to(raiz)}`")
@@ -190,6 +274,10 @@ def main():
         "--dias", type=int, default=365,
         help="Dias sem commit para considerar um arquivo 'parado' (padrão: 365)",
     )
+    parser.add_argument(
+        "--similaridade", type=float, default=0.90,
+        help="Limite de similaridade parcial (SequenceMatcher) (padrão: 0.90)",
+    )
     args = parser.parse_args()
 
     raiz = Path(args.caminho).resolve()
@@ -202,10 +290,13 @@ def main():
     print(f"{len(arquivos)} arquivos encontrados.")
 
     duplicados = encontrar_duplicados_exatos(arquivos)
+    similares = encontrar_duplicados_similares(arquivos, args.similaridade)
     parados = encontrar_arquivos_parados(raiz, arquivos, args.dias)
     suspeitos = encontrar_possiveis_nao_referenciados(arquivos)
 
-    relatorio = gerar_relatorio(raiz, duplicados, parados, suspeitos, args.dias)
+    relatorio = gerar_relatorio(
+        raiz, duplicados, similares, parados, suspeitos, args.dias, args.similaridade
+    )
 
     with open(args.saida, "w", encoding="utf-8") as f:
         f.write(relatorio)

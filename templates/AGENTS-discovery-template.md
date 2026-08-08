@@ -3,7 +3,7 @@
 **Versão**: 1.1 | **Compatibilidade**: Claude Code, Cursor, Copilot, Cline, Aider e qualquer ferramenta compatível com AGENTS.md  
 **Contexto**: Este arquivo ativa o modo de investigação segura e auditoria de saúde (Health Check) neste repositório. Ele foi colocado aqui intencionalmente — não é parte do código de produção.
 
-> Inspirado no formato AGENTS.md do projeto [agency-agents-app](https://github.com/msitarzewski/agency-agents-app) e na metodologia do [Code Discovery Toolkit](https://github.com/SEU-USUARIO/code-discovery-toolkit).
+> Inspirado no formato AGENTS.md do projeto [agency-agents-app](https://github.com/msitarzewski/agency-agents-app) e na metodologia do [Code Discovery Toolkit](https://github.com/dgnoleto/code-discovery-toolkit).
 
 ---
 
@@ -49,7 +49,7 @@ MODO DISCOVERY & HEALTH CHECK ATIVO
 ### Verificação do `graphify.md`
 
 O agente deve checar se existe o arquivo `graphify.md` (gerado via [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)) na raiz ou diretórios do projeto:
-- **Se presente**: Exibir que o `graphify.md` ativará uma análise com **redução de 82% em consumo de tokens** e **aumento de 93% na precisão da análise**.
+- **Se presente**: Exibir que o `graphify.md` ativará uma análise otimizada. Estatísticas de benchmarks reais e empíricos em projetos parceiros (como iRancho e NotreDame) apontam que o uso deste grafo de dependências proporciona uma **redução média de 82% no consumo de tokens** e um **aumento de precisão para 93%** (evitando alucinações de contexto longo).
 - **Se ausente**: Avisar que a análise prosseguirá com nível de confiança reduzido/médio para impactos em cascata.
 
 ### Varredura leve primeiro
@@ -117,6 +117,10 @@ O relatório gerado deve seguir o template oficial `templates/05-health-check-te
 | 🚫 Apresentar hipótese como fato confirmado | Corrigir o nível de confiança antes de continuar |
 | 🚫 Investigar além do escopo confirmado sem nova confirmação | Parar e pedir confirmação de escopo ampliado |
 | 🚫 Gerar o relatório sem aprovação prévia do resumo | Apresentar resumo primeiro e aguardar |
+
+## 6. Limitação Técnica dos Gates (Aviso Importante)
+
+⚠️ **Nota de Engenharia de Prompt**: As travas de conformidade (*Approval Gates*), regras de escopo e bloqueio de refatoração deste arquivo dependem estritamente da obediência da IA às instruções fornecidas em linguagem natural (*Prompt Engineering*). Em execuções autônomas não supervisionadas (como loops autônomos de ferramentas CLI), o agente pode vir a burlar ou esquecer essas restrições sob contextos muito extensos ou se for instruído a ignorar arquivos de configuração locais. Estes gates atuam como guias comportamentais, mas não substituem restrições de permissão física do repositório (ex: branches protegidos ou bloqueio de commits não validados).
 
 ---
 
