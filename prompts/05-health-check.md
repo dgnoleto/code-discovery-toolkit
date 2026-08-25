@@ -9,23 +9,29 @@ Siga estritamente as etapas e regras abaixo:
 
 ---
 
-### ETAPA 1 — VERIFICAÇÃO DE GRAPHIFY & METADADOS
+### ETAPA 1 — VERIFICAÇÃO DE GRAPHIFY, CONTEXTO & METADADOS
 
-Antes de qualquer análise profunda, verifique se o usuário forneceu um arquivo de mapa de dependências/contexto (como o `graphify.md`, baseado no projeto open-source https://github.com/Graphify-Labs/graphify).
+Antes de qualquer análise profunda, verifique se o usuário forneceu:
+1. O arquivo de mapa de dependências/contexto (como o `graphify.md`, baseado no projeto open-source https://github.com/Graphify-Labs/graphify).
+2. Manuais de contexto de negócio ou arquitetura (baseados em `contexto-produto-template.md` ou `contexto-arquitetura-template.md`).
 
-1. Exiba a seguinte mensagem inicial:
+Exiba a seguinte mensagem inicial:
 
 "HEALTH CHECK DE CÓDIGO E ARQUITETURA
 
 📊 Status do Graphify: [DETECTADO / NÃO DETECTADO]
+💼 Status do Contexto de Negócio: [DETECTADO / NÃO DETECTADO]
 
 💡 DICA DE EFICIÊNCIA:
 Incluir o arquivo `graphify.md` (com base em benchmarks empíricos em projetos reais do mercado) reduz o consumo médio de tokens em 82% e eleva a precisão da análise de impacto de ~42% para 93%.
 (Saiba mais em: https://github.com/Graphify-Labs/graphify)"
 
-
-2. Caso o `graphify.md` NÃO tenha sido fornecido, acrescente o aviso:
+Caso o `graphify.md` NÃO tenha sido fornecido, acrescente o aviso:
 "⚠️ ATENÇÃO: Análise realizada sem o grafo de dependências (`graphify.md`). A veracidade da análise e o mapeamento de impactos em cascata terão nível de confiança reduzido/médio."
+
+Caso os Manuais de Contexto NÃO tenham sido fornecidos, acrescente o aviso:
+"⚠️ ATENÇÃO: Nenhum manual de contexto de produto/negócio foi fornecido. O diagnóstico de qualidade e conformidade das regras de negócio poderá ser mais genérico."
+
 
 ---
 

@@ -7,8 +7,13 @@ Você vai me ajudar a entender o propósito de um repositório de código que ni
 
 Contexto que vou te dar: [cole aqui o README, a estrutura de pastas, ou a saída de "git log --oneline | tail -20" para ver os commits iniciais]
 
-ETAPA 1 — Leitura leve (sem aprofundar ainda)
-Faça primeiro uma varredura leve: liste a estrutura de pastas, os nomes de arquivos e os módulos que você identifica, SEM ler o conteúdo completo de cada arquivo ainda. O objetivo aqui é só me mostrar o que existe, não analisar profundamente.
+Manuais de Contexto (Opcional): [Se houver, cole aqui as diretrizes de produto/arquitetura ou indique onde estão arquivos como contexto-produto-template.md ou contexto-arquitetura-template.md]
+
+ETAPA 1 — Leitura leve & Verificação de Contexto (sem aprofundar ainda)
+Faça primeiro uma varredura leve:
+1. Identifique se eu forneci algum manual de contexto de negócio, produto ou arquitetura. Se sim, cruze o entendimento geral do código com essas regras de negócio desde o início.
+2. Liste a estrutura de pastas, os nomes de arquivos e os módulos que você identifica, SEM ler o conteúdo completo de cada arquivo ainda. O objetivo aqui é só me mostrar o que existe, não analisar profundamente.
+
 
 ETAPA 2 — Confirmação de escopo
 Depois de me mostrar essa lista, pare e me pergunte:

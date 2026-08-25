@@ -8,8 +8,10 @@ Um jeito estruturado de entender repositórios de código legados ou esquecidos 
 
 Se você acabou de cair de paraquedas em um sistema legado que ninguém lembra o que faz e com **zero documentação**, não se desespere. Siga esta sequência passo a passo para mapear e auditar o código de forma segura:
 
-### 1️⃣ Passo 1: Mapeamento Inicial
-Abra a pasta [`prompts/`](prompts/), copie o conteúdo de [`01-mapeamento-inicial.md`](prompts/01-mapeamento-inicial.md) e cole no seu assistente de IA (Claude, ChatGPT, etc.) junto com a árvore de diretórios do repositório legado. Isso dará a você uma visão geral leve do sistema.
+### 1️⃣ Passo 1: Mapeamento Inicial & Contexto de Negócio
+Abra a pasta [`prompts/`](prompts/), copie o conteúdo de [`01-mapeamento-inicial.md`](prompts/01-mapeamento-inicial.md) e cole no seu assistente de IA (Claude, ChatGPT, etc.) junto com a árvore de diretórios do repositório legado. 
+> 💡 **Super Dica**: Se você possuir ou preencher os manuais rápidos de contexto ([`templates/contexto-produto-template.md`](templates/contexto-produto-template.md) ou [`templates/contexto-arquitetura-template.md`](templates/contexto-arquitetura-template.md)), anexe-os também! Isso dá à IA a visão do "Porquê" comercial por trás das regras e convenções do código, evitando relatórios puramente técnicos e genéricos. Leia o guia em [`docs/contexto-negocio-guia.md`](docs/contexto-negocio-guia.md).
+
 
 ### 2️⃣ Passo 2: Geração do Grafo de Dependências (`graphify.md`)
 Antes de mergulhar fundo no código, gere o grafo de dependências do projeto usando a ferramenta open-source [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) (veja como fazer em [`docs/graphify-guia.md`](docs/graphify-guia.md)).
@@ -53,9 +55,9 @@ Para outras ferramentas agênticas:
 | Pasta / Arquivo | Conteúdo | Precisa saber programar? |
 | :--- | :--- | :--- |
 | [`prompts/`](prompts/) | Prompts prontos para colar na IA (Mapeamento, Código Morto, Saúde, etc.) | Não |
-| [`docs/`](docs/) | Guia de [Metodologia](docs/metodologia.md), [Glossário de IA](docs/glossario.md), [Guia do Graphify](docs/graphify-guia.md) e [Guia do GitHub Action](docs/github-action-guia.md) | Não |
+| [`docs/`](docs/) | Guia de [Metodologia](docs/metodologia.md), [Glossário de IA](docs/glossario.md), [Guia do Graphify](docs/graphify-guia.md), [Guia do Contexto de Negócio](docs/contexto-negocio-guia.md) e [Guia do GitHub Action](docs/github-action-guia.md) | Não |
 | [`examples/`](examples/) | Exemplos reais de relatórios gerados (script e template de mapeamento preenchido) | Não |
-| [`templates/`](templates/) | Templates markdown de relatórios e a [GitHub Action Reutilizável](templates/github-action-discovery.yml) | Não |
+| [`templates/`](templates/) | Templates markdown de relatórios (incluindo contexto de negócio/arquitetura) e a [GitHub Action Reutilizável](templates/github-action-discovery.yml) | Não |
 | [`scripts/`](scripts/) | Script Python somente leitura que executa varredura de duplicados e inatividade | Sim (opcional) |
 | [`templates/AGENTS-discovery-template.md`](templates/AGENTS-discovery-template.md) | Template de comportamento seguro para agentes de IA | Não |
 

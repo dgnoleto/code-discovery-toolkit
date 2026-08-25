@@ -20,12 +20,14 @@ Levantamento Inicial ──> Atividade & Propósito ──> Gerar Graphify (Mapa
 
 ---
 
-## Etapa 1 — Levantamento Inicial
+## Etapa 1 — Levantamento Inicial & Mapeamento de Contexto
 
 - Leia o README existente e qualquer documentação (mesmo que antiga ou desatualizada).
-- Liste linguagens, frameworks e dependências principais.
+- **Mapeamento de Contexto de Negócio**: Colete ou preencha rapidamente os manuais mínimos de contexto (como `contexto-produto-template.md` e `contexto-arquitetura-template.md` em [`templates/`](../templates/)) para servir de RAG de produto. Veja o guia explicativo em [`docs/contexto-negocio-guia.md`](contexto-negocio-guia.md).
+- Liste linguagens, frameworks e dependências principais do repositório.
 - Identifique os principais contribuidores históricos e quando foi o último commit relevante.
-- Use o prompt [`prompts/01-mapeamento-inicial.md`](../prompts/01-mapeamento-inicial.md) para apoiar essa etapa com IA, registrando o resultado no template [`templates/01-mapeamento-template.md`](../templates/01-mapeamento-template.md).
+- Use o prompt [`prompts/01-mapeamento-inicial.md`](../prompts/01-mapeamento-inicial.md) fornecendo a árvore do repositório e os manuais de contexto coletados. Registre no template [`templates/01-mapeamento-template.md`](../templates/01-mapeamento-template.md).
+
 
 ---
 
