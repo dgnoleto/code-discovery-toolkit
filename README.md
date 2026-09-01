@@ -44,9 +44,13 @@ O Cursor permite definir regras de comportamento para a IA usando arquivos `.cur
 * **Alternativa (Novo padrão do Cursor)**: Salve o arquivo na pasta do projeto como **`.cursor/rules/discovery.md`**.
 * **Como usar**: O Chat do Cursor (Ctrl+L) e o Composer (Ctrl+I) seguirão estritamente as regras de não-alteração de código e validação prévia de escopo.
 
-### 🚀 3. Copilot / Cline / Aider
-Para outras ferramentas agênticas:
-* Cole o conteúdo do [`templates/AGENTS-discovery-template.md`](templates/AGENTS-discovery-template.md) no campo de **System Prompt** (Instruções de Sistema) do agente ou no arquivo de configuração correspondente (ex: `.clinerules` ou `.aider.conf.yml`).
+### 🏢 4. Governança Corporativa (Azure DevOps & Jira)
+Este toolkit é 100% compatível com grandes ecossistemas corporativos:
+* **Azure DevOps (Repos, Pipelines & Boards)**: Configure o pipeline agendado ([`templates/azure-pipelines-discovery.yml`](templates/azure-pipelines-discovery.yml)) para abrir Tasks no Azure Boards. Veja o [Guia de Azure DevOps](docs/azure-devops-guia.md).
+* **Jira (Atlassian)**: Envie relatórios automaticamente para o Jira do seu time com o parâmetro `--jira-url` no script. Veja o [Guia de Integração com Jira](docs/jira-guia.md).
+
+---
+
 
 ---
 
@@ -55,10 +59,10 @@ Para outras ferramentas agênticas:
 | Pasta / Arquivo | Conteúdo | Precisa saber programar? |
 | :--- | :--- | :--- |
 | [`prompts/`](prompts/) | Prompts prontos para colar na IA (Mapeamento, Código Morto, Saúde, etc.) | Não |
-| [`docs/`](docs/) | Guia de [Metodologia](docs/metodologia.md), [Glossário de IA](docs/glossario.md), [Guia do Graphify](docs/graphify-guia.md), [Guia do Contexto de Negócio](docs/contexto-negocio-guia.md) e [Guia do GitHub Action](docs/github-action-guia.md) | Não |
+| [`docs/`](docs/) | Guia de [Metodologia](docs/metodologia.md), [Glossário de IA](docs/glossario.md), [Guia do Graphify](docs/graphify-guia.md), [Contexto de Negócio](docs/contexto-negocio-guia.md), [Azure DevOps](docs/azure-devops-guia.md) e [Jira](docs/jira-guia.md) | Não |
 | [`examples/`](examples/) | Exemplos reais de relatórios gerados (script e template de mapeamento preenchido) | Não |
-| [`templates/`](templates/) | Templates markdown de relatórios (incluindo contexto de negócio/arquitetura) e a [GitHub Action Reutilizável](templates/github-action-discovery.yml) | Não |
-| [`scripts/`](scripts/) | Script Python somente leitura que executa varredura de duplicados e inatividade | Sim (opcional) |
+| [`templates/`](templates/) | Templates markdown, [GitHub Action](templates/github-action-discovery.yml) e [Azure Pipeline](templates/azure-pipelines-discovery.yml) | Não |
+| [`scripts/`](scripts/) | Script Python somente leitura (varredura e envio automatizado para o **Jira**) | Sim (opcional) |
 | [`templates/AGENTS-discovery-template.md`](templates/AGENTS-discovery-template.md) | Template de comportamento seguro para agentes de IA | Não |
 
 ---

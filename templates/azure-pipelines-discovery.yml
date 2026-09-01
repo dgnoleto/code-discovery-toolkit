@@ -1,0 +1,91 @@
+# Azure DevOps Pipeline — Code Discovery & Hygiene Check
+#
+# Este pipeline executa varreduras agendadas e cria Work Items automaticamente
+# no Azure Boards quando arquivos obsoletos ou duplicados forem identificados.
+
+trigger: none # Desativa execução automática a cada push
+
+schedules:
+  - cron: "0 8 1 * *" # Executa no dia 1º de cada mês às 08:00 UTC
+    displayName: Varredura Mensal de Higiene de Código
+    branches:
+      include:
+        - main
+        - master
+    always: true
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.x'
+      addToPath: true
+    displayName: 'Configurar Python'
+
+  - script: |
+      python scripts/analisar_repositorio.py ./ --saida relatorio-discovery.md --dias 365
+    displayName: 'Executar Script de Discovery'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: 'relatorio-discovery.md'
+      ArtifactName: 'relatorio-discovery-$(Build.BuildId)'
+      publishLocation: 'Container'
+    displayName: 'Publicar Relatório como Artifact'
+
+  - script: |
+      python -c "
+      import os, sys, json, urllib.request, urllib.parse, base64
+
+      if not os.path.exists('relatorio-discovery.md'):
+          sys.exit(0)
+
+      with open('relatorio-discovery.md', 'r', encoding='utf-8') as f:
+          content = f.read()
+
+      # Verifica se há achados reais (linhas iniciando com '- `')
+      has_findings = any(line.strip().startswith('- `') for line in content.splitlines())
+
+      if not has_findings:
+          print('Nenhum achado de código pendente. Ignorando criação de Work Item no Azure Boards.')
+          sys.exit(0)
+
+      print('Achados identificados! Criando Work Item no Azure Boards...')
+
+      # As variáveis de sistema do Azure DevOps são injetadas no ambiente
+      organization = os.environ.get('SYSTEM_COLLECTIONURI', '').rstrip('/')
+      project = os.environ.get('SYSTEM_TEAMPROJECT', '')
+      token = os.environ.get('SYSTEM_ACCESSTOKEN', '')
+
+      if not (organization and project and token):
+          print('Variáveis de autenticação do Azure DevOps não encontradas. O relatório foi gerado como Artifact.')
+          sys.exit(0)
+
+      url = f'{organization}/{project}/_apis/wit/workitems/$Task?api-version=7.1-preview.2'
+      
+      title = f'🔎 Discovery & Higiene de Código — {os.environ.get(\"BUILD_BUILDNUMBER\", \"Mensal\")}'
+      description = f'<h2>Relatório Automático de Discovery</h2><p>Este Work Item foi criado pelo <b>Code Discovery Toolkit</b>.</p><pre>{content}</pre>'
+
+      payload = [
+          {'op': 'add', 'path': '/fields/System.Title', 'value': title},
+          {'op': 'add', 'path': '/fields/System.Description', 'value': description},
+          {'op': 'add', 'path': '/fields/System.Tags', 'value': 'Discovery; TechnicalDebt; CodeQuality'}
+      ]
+
+      headers = {
+          'Content-Type': 'application/json-patch+json',
+          'Authorization': 'Basic ' + base64.b64encode(f':{token}'.encode()).decode()
+      }
+
+      req = urllib.request.Request(url, data=json.dumps(payload).encode('utf-8'), headers=headers, method='POST')
+      try:
+          with urllib.request.urlopen(req) as resp:
+              print('Work Item criado com sucesso no Azure Boards!')
+      except Exception as e:
+          print(f'Aviso: Não foi possível criar Work Item no Azure Boards: {e}')
+      "
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    displayName: 'Criar Work Item no Azure Boards (Se houver achados)'

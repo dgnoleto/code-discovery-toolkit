@@ -76,4 +76,13 @@ Investigue os arquivos parados e suspeitos de abandono mapeados nas Etapas 2 e 3
 
 - Use o prompt [`prompts/04-relatorio-final.md`](../prompts/04-relatorio-final.md) para compilar os templates preenchidos nas etapas anteriores.
 - Consolide tudo no template [`templates/04-relatorio-final-template.md`](../templates/04-relatorio-final-template.md).
+
+---
+
+## ⚡ Automação Continuada & Governança Corporativa
+
+Para evitar que a higiene de código seja um esforço isolado de uma única vez, integre o toolkit aos fluxos corporativos do seu time:
+- **Nuvem & CI/CD**: Agende varreduras mensais no **GitHub Actions** ([`templates/github-action-discovery.yml`](../templates/github-action-discovery.yml)) ou no **Azure DevOps Pipelines** ([`templates/azure-pipelines-discovery.yml`](../templates/azure-pipelines-discovery.yml) / [`docs/azure-devops-guia.md`](azure-devops-guia.md)).
+- **Gestão de Tarefas**: Direcione os achados de inatividade automaticamente para o **Jira (Atlassian)** ([`docs/jira-guia.md`](jira-guia.md)), **Azure Boards** ou **GitHub Issues**, transformando débitos técnicos em tarefas priorizáveis no backlog do time.
+
 - Entregue o relatório final como recomendação técnica estruturada para embasar os próximos passos de planejamento ou refatoração do produto.

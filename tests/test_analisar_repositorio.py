@@ -1,6 +1,9 @@
 import hashlib
+import json
 import sys
+from io import BytesIO
 from pathlib import Path
+from unittest.mock import MagicMock, patch
 
 # Adiciona o diretório raiz ao path para importar o script
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -10,6 +13,7 @@ from scripts.analisar_repositorio import (
     encontrar_duplicados_exatos,
     encontrar_duplicados_similares,
     encontrar_possiveis_nao_referenciados,
+    enviar_para_jira,
     listar_arquivos,
 )
 
@@ -113,3 +117,22 @@ def test_encontrar_possiveis_nao_referenciados_com_referencia(tmp_path):
     
     # auth.py NÃO deve ser listado como suspeito
     assert "auth.py" not in relative_suspects
+
+
+@patch("urllib.request.urlopen")
+def test_enviar_para_jira_sucesso(mock_urlopen):
+    mock_response = MagicMock()
+    mock_response.read.return_value = json.dumps({"key": "PROD-123"}).encode("utf-8")
+    mock_urlopen.return_value.__enter__.return_value = mock_response
+
+    sucesso = enviar_para_jira(
+        raiz_nome="meu-repo",
+        relatorio_texto="# Relatorio de Teste",
+        jira_url="https://empresa.atlassian.net",
+        jira_email="user@empresa.com",
+        jira_token="token123",
+        jira_project="PROD"
+    )
+
+    assert sucesso is True
+    assert mock_urlopen.called
