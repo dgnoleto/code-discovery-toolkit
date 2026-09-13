@@ -1,37 +1,35 @@
-# Prompt — Mapeamento Inicial de Repositório
+# Prompt 01 — Mapeamento Arquitetural & Propósito do Repositório
 
-Use este prompt para entender o propósito de um repositório esquecido. Ele já inclui uma confirmação de escopo antes de aprofundar, para evitar gastar tokens mapeando o repositório inteiro quando você só precisava de um pedaço. Substitua os campos entre `[ ]`.
+Use este prompt após ter gerado o `graphify.md` (Passo 1 do Discovery). Ele utiliza o grafo topológico e o código para entender a arquitetura e os módulos de um sistema sem documentação.
 
-```
-Você vai me ajudar a entender o propósito de um repositório de código que ninguém no time lembra exatamente o que faz.
+```text
+Você vai me ajudar a entender o propósito e a arquitetura de um repositório de código legado que não possui documentação.
 
-Contexto que vou te dar: [cole aqui o README, a estrutura de pastas, ou a saída de "git log --oneline | tail -20" para ver os commits iniciais]
+Contexto que vou te dar: [Cole o conteúdo do arquivo graphify.md gerado no Passo 1]
 
-Manuais de Contexto (Opcional): [Se houver, cole aqui as diretrizes de produto/arquitetura ou indique onde estão arquivos como contexto-produto-template.md ou contexto-arquitetura-template.md]
+Manuais de Contexto (Opcional): [Se houver, indique manuais como contexto-produto-template.md ou contexto-arquitetura-template.md]
 
-ETAPA 1 — Leitura leve & Verificação de Contexto (sem aprofundar ainda)
-Faça primeiro uma varredura leve:
-1. Identifique se eu forneci algum manual de contexto de negócio, produto ou arquitetura. Se sim, cruze o entendimento geral do código com essas regras de negócio desde o início.
-2. Liste a estrutura de pastas, os nomes de arquivos e os módulos que você identifica, SEM ler o conteúdo completo de cada arquivo ainda. O objetivo aqui é só me mostrar o que existe, não analisar profundamente.
-
+ETAPA 1 — Leitura da Topologia (via graphify.md)
+1. Analise o grafo de dependências e topologia fornecido no `graphify.md`.
+2. Liste os módulos principais identificados, destacando como eles se relacionam entre si.
+3. Se manuais de contexto de negócio tiverem sido fornecidos, cruze os módulos do código com as regras comerciais desde o início.
 
 ETAPA 2 — Confirmação de escopo
-Depois de me mostrar essa lista, pare e me pergunte:
+Depois de me mostrar essa lista de módulos, pare e me pergunte:
 "Quer que eu mapeie (a) o repositório como um todo, (b) um módulo específico, (c) uma função específica, ou (d) um campo específico?"
-Se eu escolher qualquer opção que não seja "o repositório como um todo", me avise claramente que as conclusões não vão cobrir o restante do repositório e podem não se sustentar se eu tentar generalizar para o sistema inteiro. Espere eu te dizer qual módulo, função ou campo antes de continuar.
+Se eu escolher qualquer opção que não seja "o repositório como um todo", me avise claramente que as conclusões não vão cobrir o restante do repositório. Espere minha confirmação antes de continuar.
 
 ETAPA 3 — Local de saída
-Depois que eu confirmar o escopo, sugira um caminho/nome de arquivo padrão para o resultado (ex: discovery/AAAA-MM-DD-mapeamento-[escopo].md) e me pergunte se confirmo esse caminho ou prefiro outro. Espere minha confirmação antes de gerar o conteúdo final.
+Depois que eu confirmar o escopo, sugira um caminho/nome de arquivo padrão para o resultado (ex: discovery/AAAA-MM-DD-mapeamento-[escopo].md) e aguarde minha confirmação.
 
-ETAPA 4 — Mapeamento (só depois das etapas acima)
+ETAPA 4 — Mapeamento Arquitetural
 Regras importantes:
-- Baseie toda conclusão apenas no que eu te forneci. Se faltar informação para responder algo, diga claramente "não há evidência suficiente" em vez de supor.
-- Não sugira refatorações, melhorias ou remoções de código nesta etapa — o objetivo aqui é só entender, não mudar nada.
-- Separe claramente o que é fato (está escrito no código/commits) do que é sua interpretação.
-- Organize sua resposta seguindo a estrutura do template em templates/01-mapeamento-template.md.
+- Baseie toda conclusão nas evidências do graphify.md e do código fornecido. Se faltar informação, diga "não há evidência suficiente".
+- Não sugira refatorações ou remoções nesta etapa — o objetivo é exclusivamente entender o sistema.
+- Organize sua resposta seguindo o template em templates/01-mapeamento-template.md.
 
 Me entregue:
-1. Um resumo do que esse repositório (ou o escopo escolhido) parece fazer, e com que nível de confiança.
-2. Pistas sobre quem o usa ou usava (outros sistemas, times, dependências).
-3. Perguntas que eu deveria fazer para alguém do time para confirmar ou descartar suas hipóteses.
+1. Um resumo do que o repositório (ou módulo escolhido) faz e com qual nível de confiança.
+2. Pistas sobre quem o usa ou usava (outros sistemas, times, dependências externas).
+3. Perguntas técnicas e de produto para validar hipóteses com o time.
 ```
