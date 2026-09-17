@@ -1,41 +1,39 @@
-# Mapeamento Inicial — iRancho Payment Gateway Integration (Exemplo Fictício)
+# Mapeamento inicial — demonstração de checkout
 
-**Data:** 06/08/2026  
-**Responsável:** Danilo Nolêto (Product Manager)  
-**Escopo:** Módulo específico — `src/services/payments/`  
+**Natureza:** exemplo didático, sem cliente ou resultado de produção.  
+**Escopo:** os três arquivos de [demo/src](demo/src/).  
+**Pergunta:** há duplicação que mereça investigação antes de evoluir a regra de desconto?
 
-> Se o escopo não for "repositório completo", as conclusões abaixo cobrem apenas o que foi especificado — não generalize para o restante do repositório sem investigar separadamente.
+## Evidência disponível
 
----
+| Evidência | Conclusão permitida | Limite |
+|---|---|---|
+| [pricing_rules.py](demo/src/pricing_rules.py) e [pricing_backup.py](demo/src/pricing_backup.py) têm o mesmo conteúdo | Existe duplicação exata | Não explica a necessidade da cópia |
+| [checkout_entry.py](demo/src/checkout_entry.py) importa pricing_rules | Existe um consumidor nessa base | Não cobre consumidores externos |
+| A cópia não é mencionada pelos outros arquivos | É candidata a investigação | Não comprova que pode ser excluída |
 
-## 1. O que esse escopo parece fazer
+## Regra observada
 
-- **Resumo**: Este módulo realiza a comunicação e integração com a API da iRancho Payments para liquidação de assinaturas mensais e geração de boletos/Pix para os clientes do SaaS. Ele parece gerenciar chamadas de cobrança, webhooks de notificação de status e tentativas de reprocessamento (retries).
-- **Nível de confiança**: **Confirmado** (para liquidação de boletos) e **Provável** (para fluxo de estorno/refund, pois o código existe no arquivo `refund.py` mas não encontramos chamadas diretas no app).
-- **Evidências que sustentam essa conclusão**:
-  - `src/services/payments/boleto.py`: Contém a classe `iRanchoBoletoService` que consome as credenciais `IRANCHO_API_KEY` do ambiente.
-  - `src/services/payments/webhooks.py`: Rota exposta `/webhooks/payments/` mapeada no controller principal.
-  - O histórico de Git aponta que o último commit relevante foi feito há 10 meses por um engenheiro focado no módulo de faturamento (commit `bf8392d`).
+A função `total_com_desconto` aplica um desconto inteiro de 10% em centavos quando o subtotal é pelo menos 10.000 centavos. Abaixo disso, retorna o subtotal original. A demonstração presume entradas inteiras não negativas; não modela impostos, frete ou validação de entrada.
 
----
+## Alternativas
 
-## 2. Quem usa (ou usava) isso
+| Alternativa | Benefício | Risco ou custo |
+|---|---|---|
+| Manter as duas implementações | Evita mudança imediata | Regras podem divergir no futuro |
+| Remover a cópia após mapear consumidores | Reduz manutenção duplicada | Exige evidência de que nenhum consumidor depende dela |
+| Investigar uso externo primeiro | Reduz incerteza da decisão | Demanda consulta a execução, configuração ou responsáveis |
 
-- **A aplicação principal do SaaS**: Faz chamadas síncronas na classe `iRanchoBoletoService` durante o checkout de novos usuários.
-- **Microserviço de Cobrança Recorrente (Cron/Scheduler)**: Executa em lote toda madrugada chamando `webhooks.py` para atualizar o status dos boletos pendentes.
+## Decisão proposta e critérios de aceite
 
----
+Investigar consumidores externos antes de propor remoção. Não alterar a regra de desconto nessa rodada.
 
-## 3. Perguntas abertas para validar com o time
+Uma futura tarefa deve indicar os consumidores verificados, a implementação mantida e testes nos limites da regra: 9.999, 10.000 e 10.001 centavos. O ponto de entrada deve continuar executável.
 
-- **[Dúvida/Hipótese]**: O fluxo de estorno em `refund.py` ainda está ativo? Não encontramos nenhuma rota no frontend ou controller principal que o acione. Pode ser código obsoleto.
-- **[Dúvida/Tipagem]**: O campo `payment_value` está sendo lido como `string` em `boleto.py:34` mas é persistido como `int` (em centavos) no banco de dados. Essa conversão implícita pode quebrar sob centavos quebrados?
-- **[Dúvida/Segurança]**: A rota de webhook em `webhooks.py` não valida a assinatura da requisição (`HMAC-SHA256`). Qualquer payload falso pode ser enviado e processado. Isso é conhecido pelo time de segurança?
+## Perguntas abertas
 
----
+- A cópia tem algum consumidor fora desse escopo?
+- O arredondamento do desconto está alinhado à política desejada?
+- A regra deveria considerar outros descontos?
 
-## Próximos passos sugeridos
-
-- [x] Validar as hipóteses acima com alguém que conheça (ou conheceu) esse repositório.
-- [ ] Seguir para a investigação de código morto e duplicações nesse mesmo escopo, usando os prompts [`02-codigo-morto.md`](../prompts/02-codigo-morto.md) e [`03-duplicacoes-redundancias.md`](../prompts/03-duplicacoes-redundancias.md).
-- [ ] Rodar a skill de **Health Check** ([`05-health-check.md`](../prompts/05-health-check.md)) para identificar inconsistências de tipagem (ex: string vs int em cobrancas) e segurança nas rotas.
+O exemplo mostra como transformar achados em perguntas e critérios de decisão. Não representa uma investigação concluída de um sistema real.

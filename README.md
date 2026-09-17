@@ -1,103 +1,106 @@
-# 🔎 Code Discovery Toolkit
+# Code Discovery Toolkit
 
-Um jeito estruturado de entender repositórios de código legados ou esquecidos e investigar código morto, duplicado ou redundante — sem inventar suposições, sem refatorar sem autorização e sem perder o foco do que foi pedido.
+**Discovery técnico de sistemas legados: do código pouco documentado a evidências para decisões de produto.**
 
----
+Para PMs, POs, FDEs e equipes de engenharia que precisam entender um sistema antes de estimar uma mudança, priorizar débito técnico ou escrever uma especificação.
 
-## ⚠️ Tem um repositório legado com zero documentação? Comece aqui!
+O toolkit combina um analisador Python, prompts de investigação e modelos de documentação. Os resultados ajudam a levantar perguntas e orientar a revisão com quem conhece o negócio.
 
-Se você acabou de cair de paraquedas em um sistema legado que ninguém lembra o que faz e com **zero documentação**, não se desespere. Siga esta sequência passo a passo para mapear e auditar o código de forma segura:
+## Veja primeiro
 
-### 1️⃣ Passo 1: Geração do Grafo de Dependências (`graphify.md`)
-Antes de qualquer análise de código, gere a topologia do repositório usando a ferramenta open-source [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) (veja como fazer em [`docs/graphify-guia.md`](docs/graphify-guia.md)).
-> **Por que este é o Passo 1?** Anexar o `graphify.md` nas etapas seguintes reduz o consumo médio de tokens da IA em **82%** e eleva a precisão da análise de impacto de **~42% para 93%** (dados baseados em benchmarks empíricos de projetos reais legados do mercado, mitigando alucinações de contexto longo). Isso garante que a IA entenda a estrutura global do projeto antes de ler o código bruto.
+- [Demonstração local e interpretação dos achados](examples/demo/README.md): uma base fictícia, um comando e resultados conferíveis.
+- [Exemplo de decisão de produto](examples/01-mapeamento-exemplo-preenchido.md): hipótese, evidência, alternativas e critério de aceite.
+- [Metodologia](docs/metodologia.md): roteiro de investigação.
 
-### 2️⃣ Passo 2: Mapeamento Arquitetural & Propósito
-Abra a pasta [`prompts/`](prompts/), copie o conteúdo de [`01-mapeamento-inicial.md`](prompts/01-mapeamento-inicial.md) e cole no seu assistente de IA (Claude, ChatGPT, Cursor, etc.) fornecendo o `graphify.md` gerado no Passo 1.
-> 💡 **Super Dica**: Se você possuir os manuais rápidos de contexto ([`templates/contexto-produto-template.md`](templates/contexto-produto-template.md) ou [`templates/contexto-arquitetura-template.md`](templates/contexto-arquitetura-template.md)), anexe-os também! Isso dá à IA a visão do "Porquê" comercial por trás das regras e convenções do código. Leia o guia em [`docs/contexto-negocio-guia.md`](docs/contexto-negocio-guia.md).
+## Comece pelo analisador
 
-### 3️⃣ Passo 3: Health Check e Auditoria de Saúde
-Copie o prompt [`05-health-check.md`](prompts/05-health-check.md) para analisar bandeiras vermelhas cruciais do código: incompatibilidades de tipos de dados (ex: `string` vs `int`), tratamentos de erro omitidos e alertas para gargalos de performance caso o volume de dados aumente. Consolide no template [`05-health-check-template.md`](templates/05-health-check-template.md).
+Pré-requisitos: Python 3.11+; Git é necessário para consultar o histórico de commits. O analisador usa somente a biblioteca padrão do Python. Não precisa de chave de IA, Graphify ou acesso ao Jira para a análise local.
 
-### 4️⃣ Passo 4: Especificação Técnica & Manual do Legado (NOVO)
-Copie o prompt [`06-especificacao-tecnica.md`](prompts/06-especificacao-tecnica.md) para gerar uma **Especificação Técnica & Funcional** baseada exclusivamente no código real. Este passo permite que desenvolvedores e o time de produto identifiquem divergências entre o comportamento real do sistema e a intenção de negócio, consolidando tudo no template [`06-especificacao-tecnica-template.md`](templates/06-especificacao-tecnica-template.md).
+```bash
+git clone https://github.com/dgnoleto/code-discovery-toolkit.git
+cd code-discovery-toolkit
+python scripts/analisar_repositorio.py examples/demo/src --saida relatorio-demo.md
+```
 
-### 5️⃣ Passo 5: Código Morto & Duplicações
-Use os prompts [`02-codigo-morto.md`](prompts/02-codigo-morto.md) e [`03-duplicacoes-redundancias.md`](prompts/03-duplicacoes-redundancias.md) (com o apoio do script local [`scripts/analisar_repositorio.py`](scripts/)) para varrer lógicas obsoletas ou duplicadas e preencher os templates correspondentes.
+Abra o relatório e compare com a [interpretação da demonstração](examples/demo/README.md). Grave relatórios fora da pasta analisada para não incluí-los na próxima varredura.
 
-### 6️⃣ Passo 6: Relatório Final & Integração de Backlog (Jira / Azure / GitHub)
-Use o prompt [`04-relatorio-final.md`](prompts/04-relatorio-final.md) para consolidar todos os achados em um único documento estratégico ([`templates/04-relatorio-final-template.md`](templates/04-relatorio-final-template.md)) e enviar automaticamente os débitos técnicos para o Jira ou Azure Boards do seu time.
+Para investigar outra base:
 
----
+```bash
+python scripts/analisar_repositorio.py /caminho/do/repositorio --saida relatorio-discovery.md --dias 365 --similaridade 0.90
+```
 
-## 🤖 Como transformar este toolkit em um Agente de IA (Claude Code, Cursor, etc.)
+A varredura lê os arquivos do alvo; o relatório é escrito no caminho de saída. Se esse caminho já existir, será sobrescrito. O envio ao Jira é opcional e cria uma issue quando há achados e os parâmetros de conexão são fornecidos.
 
-Você pode automatizar toda essa metodologia configurando as diretivas de comportamento do toolkit diretamente em seus assistentes de código agênticos.
+## O que está implementado
 
-### 💻 1. Claude Code
-O Claude Code lê automaticamente instruções de comportamento de arquivos markdown específicos.
-* **Como configurar**: Copie o arquivo [`templates/AGENTS-discovery-template.md`](templates/AGENTS-discovery-template.md) para a raiz do repositório que você deseja analisar e renomeie-o para **`CLAUDE.md`**.
-* **Como usar**: Ao iniciar o Claude Code no terminal, ele carregará as regras do `CLAUDE.md` automaticamente, assumindo a persona de Discovery (agente somente leitura, com gates de confirmação de escopo e checagem de `graphify.md`).
+| Parte | Como funciona | Limite |
+|---|---|---|
+| Duplicações exatas | Agrupa arquivos pelo hash SHA-256 | Igualdade de conteúdo não determina se a duplicação é desnecessária |
+| Similaridade textual | Compara textos com `difflib.SequenceMatcher` | Não compara semântica; ignora textos acima de 250 KB e pares com diferença de tamanho superior a 20% |
+| Inatividade | Consulta o último commit de cada arquivo com Git | Ausência de commits recentes não significa abandono |
+| Possíveis arquivos não referenciados | Procura o nome-base como palavra inteira em outros arquivos de texto | Pode omitir usos dinâmicos ou externos e considerar comentários como referências |
+| Relatório | Consolida candidatos em Markdown | Requer investigação e validação humana |
+| Jira | Envia o relatório à API REST v3 | Precisa de credenciais e permissões; não evita issues duplicadas entre execuções |
 
-### ⌃ 2. Cursor
-O Cursor permite definir regras de comportamento para a IA usando arquivos `.cursorrules`.
-* **Como configurar**: Copie o arquivo [`templates/AGENTS-discovery-template.md`](templates/AGENTS-discovery-template.md) para a raiz do repositório legado e renomeie para **`.cursorrules`**.
-* **Alternativa (Novo padrão do Cursor)**: Salve o arquivo na pasta do projeto como **`.cursor/rules/discovery.md`**.
-* **Como usar**: O Chat do Cursor (Ctrl+L) e o Composer (Ctrl+I) seguirão estritamente as regras de não-alteração de código e validação prévia de escopo.
+O código está em [scripts/analisar_repositorio.py](scripts/analisar_repositorio.py). O analisador não executa o código investigado, não extrai uma árvore sintática e não produz um grafo de chamadas.
 
-### 🏢 3. Governança Corporativa (Azure DevOps & Jira)
-Este toolkit é 100% compatível com grandes ecossistemas corporativos:
-* **Azure DevOps (Repos, Pipelines & Boards)**: Configure o pipeline agendado ([`templates/azure-pipelines-discovery.yml`](templates/azure-pipelines-discovery.yml)) para abrir Tasks no Azure Boards. Veja o [Guia de Azure DevOps](docs/azure-devops-guia.md).
-* **Jira (Atlassian)**: Envie relatórios automaticamente para o Jira do seu time com o parâmetro `--jira-url` no script. Veja o [Guia de Integração com Jira](docs/jira-guia.md).
+## Da investigação à decisão
 
----
+1. **Defina a pergunta e o escopo.** Que mudança, risco ou dúvida de negócio precisa ser esclarecida?
+2. **Reúna contexto.** Use os modelos de [produto](templates/contexto-produto-template.md) e [arquitetura](templates/contexto-arquitetura-template.md).
+3. **Mapeie o comportamento.** Comece pelo [prompt de mapeamento](prompts/01-mapeamento-inicial.md) e confronte as respostas com os arquivos.
+4. **Investigue os candidatos.** Use os prompts de [código morto](prompts/02-codigo-morto.md), [duplicações](prompts/03-duplicacoes-redundancias.md) e [health check](prompts/05-health-check.md).
+5. **Documente a evidência.** Registre arquivo, símbolo ou linha, hipótese, impacto e dúvida aberta. O [modelo de especificação](templates/06-especificacao-tecnica-template.md) apoia essa consolidação.
+6. **Decida com o time.** Compare alternativas, priorize pelo impacto e registre critérios de aceite antes de implementar.
 
-## 📁 Estrutura do Repositório
+Os prompts são instruções para um assistente de IA; sua execução depende da ferramenta e do contexto fornecido. Uma análise escrita não comprova correção, desempenho ou segurança em produção.
 
-| Pasta / Arquivo | Conteúdo | Precisa saber programar? |
-| :--- | :--- | :--- |
-| [`prompts/`](prompts/) | Prompts prontos para colar na IA (Graphify, Mapeamento, Saúde, **Spec Técnica**, etc.) | Não |
-| [`docs/`](docs/) | Guia de [Metodologia](docs/metodologia.md), [Glossário de IA](docs/glossario.md), [Guia do Graphify](docs/graphify-guia.md), [Contexto de Negócio](docs/contexto-negocio-guia.md), [Azure DevOps](docs/azure-devops-guia.md) e [Jira](docs/jira-guia.md) | Não |
-| [`examples/`](examples/) | Exemplos reais de relatórios gerados (script e template de mapeamento preenchido) | Não |
-| [`templates/`](templates/) | Templates markdown (relatórios e **Spec Técnica**), [GitHub Action](templates/github-action-discovery.yml) e [Azure Pipeline](templates/azure-pipelines-discovery.yml) | Não |
-| [`scripts/`](scripts/) | Script Python somente leitura (varredura e envio automatizado para o **Jira**) | Sim (opcional) |
-| [`templates/AGENTS-discovery-template.md`](templates/AGENTS-discovery-template.md) | Template de comportamento seguro para agentes de IA | Não |
+## Mapas de dependências e agentes
 
----
+Um mapa de dependências pode ajudar a orientar a leitura. O [guia de Graphify](docs/graphify-guia.md) explica como tratar esse contexto externo e como medir seus efeitos. Ele não é requisito do script Python.
 
-## 🛡️ Princípios Não Negociáveis
+O [template de instruções para agentes](templates/AGENTS-discovery-template.md) orienta investigação e revisão humana. Adapte-o às instruções e permissões da ferramenta escolhida. Regras em Markdown não substituem controles de acesso ou isolamento do ambiente.
 
-1. **Não inventar**: Toda conclusão precisa de evidência direta (código, commit, histórico ou confirmação humana).
-2. **Não refatorar sem autorização**: O objetivo é exclusivamente mapear e documentar. A IA está estritamente proibida de alterar o código de produção ou inflar o projeto.
-3. **Não sair do foco**: Toda rodada de análise tem escopo definido e gates de aprovação humana obrigatórios.
+Para um pacote de skills específico do Claude Code, veja [Claude Code for PM](https://github.com/dgnoleto/claude-code-for-pm).
 
-Detalhes completos em [`docs/principios.md`](docs/principios.md).
+## Integrações e automação
 
----
+- [Jira](docs/jira-guia.md): configuração do envio opcional de relatórios.
+- [GitHub Actions](docs/github-action-guia.md): guia e template de execução.
+- [Azure DevOps](docs/azure-devops-guia.md): guia e template de pipeline.
 
-## 📚 Glossário & Conceitos
+Os templates precisam ser adaptados e testados no ambiente de destino. Para rotinas recorrentes, revise credenciais, exposição de relatórios e prevenção de duplicações antes de ativar publicação automática.
 
-Consulte o documento **[`docs/glossario.md`](docs/glossario.md)** para explicações amigáveis sobre:
-* **Conceitos de IA**: LLM, RAG, Graphify, Chain-of-Verification (CoVE), Approval Gates, Human-in-the-Loop (HITL), Janela de Contexto, MCP e AST.
-* **Conceitos de Engenharia & Produto**: Discovery Técnico, Débito Técnico, Código Morto, Code Smells e Clean Code.
+## Validação e limitações
 
----
+```bash
+python -m pip install pytest
+python -m pytest tests/ -q
+```
 
-## 🌟 Inspirações e referências
+A suíte inclui detecção de duplicações, filtros de diretórios, referências textuais e envio ao Jira com resposta simulada. Esses testes não demonstram integração real com um ambiente Jira nem precisão da análise por IA.
 
-* [**Graphify-Labs/graphify**](https://github.com/Graphify-Labs/graphify): Inspirou a integração de grafos de dependências para análise de impacto. Testes empíricos em projetos reais apontam redução de até 82% no consumo de tokens e aumento da acurácia de ~42% para 93% após validação humana.
-* [**llm-council**](https://github.com/karpathy/llm-council) (Andrej Karpathy): Inspirou a ideia de validação cruzada para achados críticos.
-* [**agency-agents-app**](https://github.com/msitarzewski/agency-agents-app): Inspirou o formato `AGENTS.md` e o conceito de Approval Gates.
+Não há benchmark reproduzível publicado aqui que sustente percentuais universais de economia de tokens ou acurácia. O [protocolo de comparação](docs/graphify-guia.md) separa consumo, qualidade e custo.
 
----
+Para bases grandes, a comparação de pares e a leitura de arquivos em memória podem ser custosas. Comece por um módulo e valide o tempo e a memória consumidos.
 
-## 👤 Autor
+## Estrutura e contribuição
 
-Feito por **Danilo Nolêto**, Product Manager com prática em discovery técnico assistido por IA, governança de IA aplicada à engenharia de requisitos e recuperação de sistemas legados.  
-[LinkedIn](https://linkedin.com/in/danilog-noleto)
+- [prompts/](prompts/): roteiros de investigação.
+- [templates/](templates/): modelos de relatório, contexto e automação.
+- [examples/](examples/): demonstrações e exemplos didáticos.
+- [docs/](docs/): metodologia, princípios, glossário e integrações.
+- [scripts/](scripts/): analisador Python.
+- [tests/](tests/): testes automatizados.
 
----
+Ao relatar um problema, informe comando, versão do Python, comportamento esperado e exemplo mínimo sem dados privados. Sugestões devem explicar qual problema de investigação resolvem e como verificar o resultado.
 
-## 📄 Licença
+## Autor e referências
 
-Este projeto está sob a licença MIT — veja [`LICENSE`](LICENSE).
+**Danilo Nolêto** — produto, discovery técnico, integrações e IA aplicada.  
+[Perfil](https://github.com/dgnoleto) · [LinkedIn](https://www.linkedin.com/in/danilog-noleto)
+
+Referências e inspirações: [Graphify](https://github.com/Graphify-Labs/graphify), [llm-council](https://github.com/karpathy/llm-council) e [agency-agents-app](https://github.com/msitarzewski/agency-agents-app). As ferramentas externas têm instalação e manutenção próprias.
+
+Licença MIT — [LICENSE](LICENSE).

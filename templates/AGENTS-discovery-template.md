@@ -1,6 +1,6 @@
 # AGENTS.md — Modo Discovery & Health Check (somente leitura)
 
-**Versão**: 1.1 | **Compatibilidade**: Claude Code, Cursor, Copilot, Cline, Aider e qualquer ferramenta compatível com AGENTS.md  
+**Versão**: 1.2 | **Compatibilidade**: Claude Code, Cursor, Copilot, Cline, Aider e qualquer ferramenta compatível com AGENTS.md  
 **Contexto**: Este arquivo ativa o modo de investigação segura e auditoria de saúde (Health Check) neste repositório. Ele foi colocado aqui intencionalmente — não é parte do código de produção.
 
 > Inspirado no formato AGENTS.md do projeto [agency-agents-app](https://github.com/msitarzewski/agency-agents-app) e na metodologia do [Code Discovery Toolkit](https://github.com/dgnoleto/code-discovery-toolkit).
@@ -49,8 +49,8 @@ MODO DISCOVERY & HEALTH CHECK ATIVO
 ### Verificação do `graphify.md`
 
 O agente deve checar se existe o arquivo `graphify.md` (gerado via [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)) na raiz ou diretórios do projeto:
-- **Se presente**: Exibir que o `graphify.md` ativará uma análise otimizada. Estatísticas de benchmarks reais e empíricos em projetos parceiros (como iRancho e NotreDame) apontam que o uso deste grafo de dependências proporciona uma **redução média de 82% no consumo de tokens** e um **aumento de precisão para 93%** (evitando alucinações de contexto longo).
-- **Se ausente**: Avisar que a análise prosseguirá com nível de confiança reduzido/médio para impactos em cascata.
+- **Se presente**: Registre origem, data e cobertura do mapa. Use-o para orientar a leitura e confirme as relações relevantes no código. Não atribua percentuais de eficiência ou precisão sem medição.
+- **Se ausente**: Investigue referências diretamente no código. Justifique a confiança de cada achado e registre dependências externas ou dinâmicas não verificadas.
 
 ### Varredura leve primeiro
 
@@ -129,4 +129,4 @@ O relatório gerado deve seguir o template oficial `templates/05-health-check-te
 1. Copie este arquivo para a raiz do repositório que você quer investigar/auditar.
 2. Renomeie-o para `AGENTS.md` (ou adicione o conteúdo a um `AGENTS.md` já existente no projeto).
 3. Abra o repositório com sua ferramenta de IA agêntica preferida (Claude Code, Cursor, Copilot, etc.).
-4. A ferramenta vai carregar este arquivo automaticamente e operar em modo discovery/health check.
+4. Confira na ferramenta se o arquivo foi carregado; o suporte a nomes e formatos varia. Configure permissões de leitura quando precisar impedir escrita tecnicamente.

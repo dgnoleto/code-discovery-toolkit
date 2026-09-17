@@ -23,11 +23,11 @@ Exiba a seguinte mensagem inicial:
 💼 Status do Contexto de Negócio: [DETECTADO / NÃO DETECTADO]
 
 💡 DICA DE EFICIÊNCIA:
-Incluir o arquivo `graphify.md` (com base em benchmarks empíricos em projetos reais do mercado) reduz o consumo médio de tokens em 82% e eleva a precisão da análise de impacto de ~42% para 93%.
-(Saiba mais em: https://github.com/Graphify-Labs/graphify)"
+Um mapa de dependências pode orientar a leitura. Confira sua atualidade e valide os achados no código; não atribua ganhos de tokens ou precisão sem medição.
+(Consulte docs/graphify-guia.md para um protocolo de comparação.)"
 
 Caso o `graphify.md` NÃO tenha sido fornecido, acrescente o aviso:
-"⚠️ ATENÇÃO: Análise realizada sem o grafo de dependências (`graphify.md`). A veracidade da análise e o mapeamento de impactos em cascata terão nível de confiança reduzido/médio."
+"⚠️ ATENÇÃO: Análise realizada sem o grafo de dependências (`graphify.md`). Investigue referências diretamente no código e registre lacunas; justifique a confiança por achado, sem atribuir uma nota fixa à ausência do mapa."
 
 Caso os Manuais de Contexto NÃO tenham sido fornecidos, acrescente o aviso:
 "⚠️ ATENÇÃO: Nenhum manual de contexto de produto/negócio foi fornecido. O diagnóstico de qualidade e conformidade das regras de negócio poderá ser mais genérico."

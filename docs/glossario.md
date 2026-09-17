@@ -6,7 +6,7 @@ Este glossário explica em linguagem didática e acessível todos os conceitos u
 
 ## 🤖 1. Conceitos de Inteligência Artificial & Engenharia Agêntica
 
-estos conceitos explicam como as IAs modernas (ChatGPT, Claude, Cursor, Copilot) funcionam e por que este toolkit impõe regras rígidas para garantir acurácia e segurança.
+Estes conceitos ajudam a entender o uso de IA na investigação. As instruções orientam o trabalho; qualidade e segurança dependem também de validação e controles técnicos.
 
 ### **LLM (Large Language Model / Modelo de Linguagem de Grande Porte)**
 * **O que é**: O "cérebro" de IAs como Claude e ChatGPT, treinado em bilhões de textos para entender e gerar linguagem humana e código.
@@ -14,7 +14,7 @@ estos conceitos explicam como as IAs modernas (ChatGPT, Claude, Cursor, Copilot)
 
 ### **Chain-of-Verification (CoVE / Cadeia de Verificação)** *(Implícito)*
 * **O que é**: Uma técnica avançada de prompting onde a IA é forçada a checar e tentar refutar suas próprias hipóteses antes de emitir um diagnóstico final.
-* **No Toolkit**: Quando o toolkit exige que a IA aponte `arquivo:linha` e traga evidências para cada achado (separando em *Confirmado*, *Provável* e *Hipótese*), estamos aplicando o princípio do CoVE para eliminar respostas enganosas.
+* **No Toolkit**: Quando o toolkit exige que a IA aponte `arquivo:linha` e traga evidências para cada achado (separando em *Confirmado*, *Provável* e *Hipótese*), o objetivo é facilitar revisão e detecção de respostas sem evidência. Isso não implementa, por si só, um protocolo completo de CoVE.
 
 ### **Approval Gates (Gates Humanos de Aprovação)** *(Implícito)*
 * **O que é**: Pontos de parada obrigatórios em um fluxo de trabalho agêntico onde a IA é proibida de avançar sem a autorização explícita de um humano.
@@ -26,11 +26,11 @@ estos conceitos explicam como as IAs modernas (ChatGPT, Claude, Cursor, Copilot)
 
 ### **RAG (Retrieval-Augmented Generation / Geração Aumentada por Recuperação)**
 * **O que é**: A prática de alimentar a IA com arquivos, documentações ou contextos locais antes de fazer uma pergunta, em vez de depender apenas da memória pré-treinada da IA.
-* **No Toolkit**: Ao copiar a estrutura do repositório, relatórios ou o `graphify.md` para o chat da IA, você está realizando RAG manual.
+* **No Toolkit**: Fornecer arquivos e relatórios adiciona contexto à análise. O toolkit não implementa um mecanismo próprio de indexação e recuperação de RAG.
 
 ### **Graphify & Topologia de Contexto**
 * **O que é**: Técnica de mapeamento que converte o código-fonte em um grafo sintético de dependências entre chamadas e arquivos (baseado em [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)).
-* **No Toolkit**: Anexar o `graphify.md` permite que a IA entenda a relação estrutural do código. Benchmarks empíricos em projetos legados reais do mercado apontam uma **redução média de 82% no volume de tokens** na conversa e uma **melhoria da precisão de ~42% para 93%** nas análises de cascata de impacto.
+* **No Toolkit**: Um mapa pode orientar a busca de referências. Confira cobertura e atualidade; seu efeito deve ser medido com o [protocolo de avaliação](graphify-guia.md).
 
 
 ### **Janela de Contexto (Context Window) & Token Limits**
@@ -43,7 +43,7 @@ estos conceitos explicam como as IAs modernas (ChatGPT, Claude, Cursor, Copilot)
 
 ### **Agente Somente Leitura (Read-Only Agent)** *(Implícito)*
 * **O que é**: Um perfil de agente de IA cujas ferramentas de escrita e edição são desabilitadas ou travadas por instrução de sistema.
-* **No Toolkit**: Garantido através do `AGENTS-discovery-template.md` (`AGENTS.md`), que desativa a capacidade dos agentes autônomos (Cursor, Claude Code, etc.) de alterarem código de produção.
+* **No Toolkit**: O `AGENTS-discovery-template.md` orienta investigação sem alterações. Ele não desativa ferramentas de escrita; restrições efetivas dependem das permissões configuradas no ambiente.
 
 ### **MCP (Model Context Protocol)** *(Implícito)*
 * **O que é**: O novo padrão universal da indústria que conecta assistentes de IA diretamente a ferramentas e arquivos do computador de forma segura e padronizada.
