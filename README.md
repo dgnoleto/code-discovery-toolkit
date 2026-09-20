@@ -30,23 +30,26 @@ Use o prompt [`04-relatorio-final.md`](prompts/04-relatorio-final.md) para conso
 
 ---
 
-## 🤖 Como transformar este toolkit em um Agente de IA (Claude Code, Cursor, etc.)
+## 🤖 Como transformar este toolkit em um Agente de IA (Antigravity, Codex, Claude Code, Cursor)
 
 Você pode automatizar toda essa metodologia configurando as diretivas de comportamento do toolkit diretamente em seus assistentes de código agênticos.
 
-### 💻 1. Claude Code
-O Claude Code lê automaticamente instruções de comportamento de arquivos markdown específicos.
-* **Como configurar**: Copie o arquivo [`templates/AGENTS-discovery-template.md`](templates/AGENTS-discovery-template.md) para a raiz do repositório que você deseja analisar e renomeie-o para **`CLAUDE.md`**.
-* **Como usar**: Ao iniciar o Claude Code no terminal, ele carregará as regras do `CLAUDE.md` automaticamente, assumindo a persona de Discovery (agente somente leitura, com gates de confirmação de escopo e checagem de `graphify.md`).
+### 🌌 1. Google Antigravity (AGY) & ChatGPT Codex
+Plataformas agênticas modernas executam o toolkit utilizando habilidades nativas (*skills*), ferramentas MCP e subagentes:
+* **Como usar no Antigravity**: Carregue o [`templates/AGENTS-discovery-template.md`](templates/AGENTS-discovery-template.md) como diretiva de sistema. O Antigravity executa a varredura em subagentes paralelos e conecta-se via MCP ao Jira ou Azure DevOps.
+* **Como usar no ChatGPT Codex / Canvas**: Insira o template de agente nas instruções de sistema (*System Prompt*) do seu projeto. O Codex executará a leitura dos módulos preservando a trava de somente leitura.
 
-### ⌃ 2. Cursor
-O Cursor permite definir regras de comportamento para a IA usando arquivos `.cursorrules`.
-* **Como configurar**: Copie o arquivo [`templates/AGENTS-discovery-template.md`](templates/AGENTS-discovery-template.md) para a raiz do repositório legado e renomeie para **`.cursorrules`**.
-* **Alternativa (Novo padrão do Cursor)**: Salve o arquivo na pasta do projeto como **`.cursor/rules/discovery.md`**.
-* **Como usar**: O Chat do Cursor (Ctrl+L) e o Composer (Ctrl+I) seguirão estritamente as regras de não-alteração de código e validação prévia de escopo.
+### 💻 2. Claude Code & Cursor
+* **Claude Code**: Copie [`templates/AGENTS-discovery-template.md`](templates/AGENTS-discovery-template.md) para a raiz como **`CLAUDE.md`**. Ao abrir no terminal, ele assumirá o perfil de Discovery somente leitura.
+* **Cursor / Windsurf**: Copie [`templates/AGENTS-discovery-template.md`](templates/AGENTS-discovery-template.md) para a raiz como **`.cursorrules`** (ou `.cursor/rules/discovery.md`).
 
-### 🏢 3. Governança Corporativa (Azure DevOps & Jira)
-Este toolkit é 100% compatível com grandes ecossistemas corporativos:
+### 🔄 3. Engenharia de Loops Agênticos, MCP & Guardiões (Avançado)
+Para repositórios gigantes (300+ arquivos), consulte o **[Guia de Engenharia de Loops Agênticos](docs/engenharia-de-loops-guia.md)**. Ele ensina a configurar:
+* Varreduras iterativas módulo a módulo sem estourar a janela de contexto.
+* Conexão via **MCP (Model Context Protocol)** com o Jira / Azure Boards.
+* Injeção de **Guardiões de Validação Humana** ([`templates/card-backlog-healthcheck-template.md`](templates/card-backlog-healthcheck-template.md)) exigindo que desenvolvedores auditem a veracidade de cada card antes da implementação.
+
+### 🏢 4. Governança Corporativa (Azure DevOps & Jira)
 * **Azure DevOps (Repos, Pipelines & Boards)**: Configure o pipeline agendado ([`templates/azure-pipelines-discovery.yml`](templates/azure-pipelines-discovery.yml)) para abrir Tasks no Azure Boards. Veja o [Guia de Azure DevOps](docs/azure-devops-guia.md).
 * **Jira (Atlassian)**: Envie relatórios automaticamente para o Jira do seu time com o parâmetro `--jira-url` no script. Veja o [Guia de Integração com Jira](docs/jira-guia.md).
 
@@ -57,9 +60,9 @@ Este toolkit é 100% compatível com grandes ecossistemas corporativos:
 | Pasta / Arquivo | Conteúdo | Precisa saber programar? |
 | :--- | :--- | :--- |
 | [`prompts/`](prompts/) | Prompts prontos para colar na IA (Graphify, Mapeamento, Saúde, **Spec Técnica**, etc.) | Não |
-| [`docs/`](docs/) | Guia de [Metodologia](docs/metodologia.md), [Glossário de IA](docs/glossario.md), [Guia do Graphify](docs/graphify-guia.md), [Contexto de Negócio](docs/contexto-negocio-guia.md), [Azure DevOps](docs/azure-devops-guia.md) e [Jira](docs/jira-guia.md) | Não |
+| [`docs/`](docs/) | Guia de [Metodologia](docs/metodologia.md), [Glossário de IA](docs/glossario.md), [Graphify](docs/graphify-guia.md), [Contexto de Negócio](docs/contexto-negocio-guia.md), [Engenharia de Loops & MCP](docs/engenharia-de-loops-guia.md), [Azure DevOps](docs/azure-devops-guia.md) e [Jira](docs/jira-guia.md) | Não |
 | [`examples/`](examples/) | Exemplos reais de relatórios gerados (script e template de mapeamento preenchido) | Não |
-| [`templates/`](templates/) | Templates markdown (relatórios e **Spec Técnica**), [GitHub Action](templates/github-action-discovery.yml) e [Azure Pipeline](templates/azure-pipelines-discovery.yml) | Não |
+| [`templates/`](templates/) | Templates markdown (relatórios, **Spec Técnica** e **Cards de Backlog com Guardião**), [GitHub Action](templates/github-action-discovery.yml) e [Azure Pipeline](templates/azure-pipelines-discovery.yml) | Não |
 | [`scripts/`](scripts/) | Script Python somente leitura (varredura e envio automatizado para o **Jira**) | Sim (opcional) |
 | [`templates/AGENTS-discovery-template.md`](templates/AGENTS-discovery-template.md) | Template de comportamento seguro para agentes de IA | Não |
 

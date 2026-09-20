@@ -45,11 +45,21 @@ estos conceitos explicam como as IAs modernas (ChatGPT, Claude, Cursor, Copilot)
 * **O que é**: Um perfil de agente de IA cujas ferramentas de escrita e edição são desabilitadas ou travadas por instrução de sistema.
 * **No Toolkit**: Garantido através do `AGENTS-discovery-template.md` (`AGENTS.md`), que desativa a capacidade dos agentes autônomos (Cursor, Claude Code, etc.) de alterarem código de produção.
 
-### **MCP (Model Context Protocol)** *(Implícito)*
-* **O que é**: O novo padrão universal da indústria que conecta assistentes de IA diretamente a ferramentas e arquivos do computador de forma segura e padronizada.
+### **MCP (Model Context Protocol)**
+* **O que é**: O novo padrão universal aberto da indústria para conectar agentes de IA (Claude Code, Cursor, Antigravity, ChatGPT) a ferramentas e APIs externas de forma segura.
+* **No Toolkit**: Utilizado na Engenharia de Loops para conectar agentes a servidores MCP de gestão de tarefas (Jira REST API, Azure DevOps) para publicar cards de backlog automatizados.
 
-### **AST (Abstract Syntax Tree / Árvore de Sintaxe Abstrata)** *(Implícito)*
-* **O que é**: A representação gramatical e estrutural que computadores usam para entender o código sem precisar executá-lo.
+### **Engenharia de Loops Agênticos (Agentic Loops)** *(Implícito)*
+* **O que é**: Padrão de arquitetura de IA onde o agente executa um ciclo iterativo contínuo (Avaliação -> Execução de Ferramenta -> Salvamento Parcial -> Próximo Módulo -> Verificação) para varrer bases de código gigantes (300+ arquivos) sem sobrecarregar a janela de contexto.
+* **No Toolkit**: Detalhado no guia [`docs/engenharia-de-loops-guia.md`](engenharia-de-loops-guia.md), permitindo varreduras módulo a módulo e auditoria cruzada (CoVE).
+
+### **Task Guardian (Guardião de Tarefas / HITL Barrier)** *(Implícito)*
+* **O que é**: Uma trava de segurança em fluxos de trabalho agênticos que injeta a obrigação de validação humana prévia em todo card ou tarefa gerada por IA antes de sua execução pelo time.
+* **No Toolkit**: Todo card publicado no Jira/Azure via IA exige a etiqueta `[Pendente Validação Humana]` e o preenchimento da checklist do [`templates/card-backlog-healthcheck-template.md`](../templates/card-backlog-healthcheck-template.md) pelo desenvolvedor responsável.
+
+### **Plataformas Agênticas (Antigravity AGY, ChatGPT Codex, Cursor, Claude Code)**
+* **O que é**: Motores e IDEs de IA capazes de ler diretivas (`AGENTS.md`), rodar ferramentas locais e utilizar protocolos de contexto para realizar tarefas complexas no seu projeto.
+
 
 ---
 
