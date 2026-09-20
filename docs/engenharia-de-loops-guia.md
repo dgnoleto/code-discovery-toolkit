@@ -4,6 +4,27 @@ Este guia é voltado para desenvolvedores e arquitetos que utilizam assistentes 
 
 ---
 
+## 🚀 O que fazer agora? (Passo a Passo Prático de 3 Minutos)
+
+Se você quer executar a Engenharia de Loops no seu repositório legado agora, siga estas 3 etapas diretas:
+
+1. **Passo 1 — Copie a Diretiva do Agente**:
+   Copie o arquivo [`templates/AGENTS-discovery-template.md`](../templates/AGENTS-discovery-template.md) para a raiz do seu repositório legado com o nome correspondente à sua ferramenta de IA:
+   - **Google Antigravity (AGY)** ou **Claude Code**: salve como `AGENTS.md` ou `CLAUDE.md`.
+   - **Cursor / Windsurf**: salve como `.cursorrules` ou `.windsurfrules`.
+   - **ChatGPT Codex / Canvas**: cole o texto nas *Instruções de Sistema* do seu projeto.
+
+2. **Passo 2 — Cole o Prompt do Loop de Varredura**:
+   No chat do seu assistente de IA, cole a seguinte instrução:
+   > *"Leia o mapa `graphify.md`. Execute uma varredura iterativa módulo por módulo. Para cada módulo, salve o relatório em `discovery/modulos/[nome-do-modulo].md` sem modificar o código de produção."*
+
+3. **Passo 3 — (Opcional) Publique os Cards no Jira/Azure via MCP**:
+   Após o término do loop, instrua a IA:
+   > *"Converta os achados do health check em cards no Jira/Azure Boards utilizando o modelo `templates/card-backlog-healthcheck-template.md` com a tag [Pendente Validação Humana]."*
+
+---
+
+
 ## 🔁 O que é Engenharia de Loops Agênticos (Agentic Loops)?
 
 Em repositórios legados extensos, pedir para uma IA analisar todos os arquivos de uma única vez estoura a **janela de contexto** (*context window*) do modelo, gerando alucinações, omissões ou respostas truncadas.
