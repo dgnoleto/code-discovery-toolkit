@@ -2,8 +2,8 @@
 
 **Data:** [DD/MM/AAAA]  
 **Escopo Investigado:** [Função X / Módulo Y / Geral (Módulo por Módulo)]  
-**Grafo de Dependências (`graphify.md`):** [✅ Presente (-82% tokens / +93% precisão em benchmarks reais) / ⚠️ Ausente (Confiança Reduzida)]  
-**Nível de Confiança da Veracidade:** [Alta / Média / Baixa]  
+**Mapa de Dependências:** [Presente / Ausente; ferramenta, data e cobertura quando disponível]  
+**Evidências e Limitações:** [Justifique a confiança de cada achado com as fontes consultadas e lacunas]  
 
 ---
 

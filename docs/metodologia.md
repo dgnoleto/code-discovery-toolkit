@@ -15,24 +15,24 @@ Use este guia para conduzir uma investigação estruturada em repositórios lega
 ## 🚦 O Fluxo Sequencial de Discovery
 
 ```text
-Gerar Graphify (Mapa Topológico) ──> Mapeamento & Propósito ──> Health Check ──> Especificação Técnica ──> Código Morto/Duplicado ──> Relatório & Backlog
+Definir escopo e reunir contexto ──> Mapeamento & Propósito ──> Health Check ──> Especificação Técnica ──> Código Morto/Duplicado ──> Relatório & Backlog
 ```
 
 ---
 
-## Etapa 1 — Geração do Grafo de Dependências (`graphify.md`)
+## Etapa 1 — Contexto e mapa de dependências opcional
 
-Antes de qualquer análise de código ou pergunta complexa para a IA, o primeiro passo é gerar o mapa topológico do projeto.
-- Gere o arquivo `graphify.md` usando a ferramenta open-source [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) (veja o guia em [`docs/graphify-guia.md`](graphify-guia.md)).
-- **Por que este é o Passo 1?**: O grafo de dependências resume a arquitetura do projeto em poucas linhas. Com base em testes reais do mercado, alimentar a IA com esse arquivo reduz o consumo médio de tokens em **82%** e eleva a precisão das análises de impacto de **~42% para 93%** (evitando alucinações), servindo de base sólida para todas as etapas seguintes.
+Comece pela pergunta e pelo escopo. Um mapa de dependências pode ajudar a orientar a leitura, mas não é requisito do analisador Python.
+- Se optar por um mapa, gere o arquivo `graphify.md` usando a ferramenta open-source [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) (veja o guia em [`docs/graphify-guia.md`](graphify-guia.md)).
+- Confira a cobertura e a atualidade do mapa; valide cada relação relevante no código. Não atribua percentuais de eficiência ou precisão sem uma medição reproduzível.
 
 ---
 
 ## Etapa 2 — Mapeamento Arquitetural & Propósito
 
-Com o mapa topológico `graphify.md` em mãos:
+Com o contexto disponível, incluindo um mapa se houver:
 - Colete ou preencha rapidamente os manuais mínimos de contexto de negócio (`contexto-produto-template.md` e `contexto-arquitetura-template.md` em [`templates/`](../templates/)) para servir de RAG de produto. Veja o guia explicativo em [`docs/contexto-negocio-guia.md`](contexto-negocio-guia.md).
-- Use o prompt [`prompts/01-mapeamento-inicial.md`](../prompts/01-mapeamento-inicial.md) fornecendo o `graphify.md` e os manuais de contexto coletados.
+- Use o prompt [`prompts/01-mapeamento-inicial.md`](../prompts/01-mapeamento-inicial.md) fornecendo os arquivos e os manuais de contexto disponíveis.
 - Registre os achados estruturados no template [`templates/01-mapeamento-template.md`](../templates/01-mapeamento-template.md).
 
 ---
@@ -48,7 +48,7 @@ Com o mapa de dependências e a arquitetura compreendida:
 
 ## Etapa 4 — Especificação Técnica & Manual do Legado (Code-Derived Spec)
 
-Em sistemas sem documentação, o código é a única fonte da verdade. Esta etapa gera o Manual Técnico do sistema:
+O código evidencia a implementação analisada, mas pode depender de configuração e serviços externos. Esta etapa documenta o comportamento observado e as lacunas:
 - Use o prompt [`prompts/06-especificacao-tecnica.md`](../prompts/06-especificacao-tecnica.md) para realizar a engenharia reversa do módulo.
 - Extraia rotas/interfaces, schemas de dados, regras de negócio codificadas e **mapeie divergências entre o comportamento real do código e a intenção de produto**.
 - Registre no template [`templates/06-especificacao-tecnica-template.md`](../templates/06-especificacao-tecnica-template.md) para validação entre Engenharia e Produto.

@@ -1,39 +1,41 @@
-# Guia de Integração com o Graphify (`graphify.md`)
+# Mapas de dependências e Graphify
 
-## O que é o Graphify?
+Um mapa de dependências pode orientar a navegação por uma base de código. Neste toolkit, `graphify.md` é uma convenção para fornecer esse contexto ao assistente; não é requisito do analisador Python.
 
-O [Graphify](https://github.com/Graphify-Labs/graphify) é um projeto *open-source* da comunidade projetado para criar grafos de contexto, topologia de chamadas e mapas de dependências de projetos de código. 
+O [Graphify](https://github.com/Graphify-Labs/graphify) é uma referência externa. Consulte o projeto para instalação, formatos de saída e compatibilidade. O toolkit não instala nem executa essa ferramenta.
 
-No contexto do **Code Discovery Toolkit**, o arquivo gerado (geralmente nomeado `graphify.md`) atua como um "mapa de navegação" prévio para os assistentes de IA (Claude, ChatGPT, Cursor, Copilot, etc.).
+## Como usar um mapa na investigação
 
----
+1. Registre a ferramenta, versão, data e commit da base usada para gerar o mapa.
+2. Confira se a exportação cobre as linguagens e os módulos de interesse.
+3. Forneça o mapa junto à pergunta de negócio e ao escopo da análise.
+4. Use o mapa para localizar candidatos; confirme relações nos arquivos e, quando necessário, com execução e responsáveis pelo sistema.
+5. Registre dependências externas, carregamentos dinâmicos e outras lacunas que o mapa não represente.
 
-## Por que usar o `graphify.md` no Health Check e Discovery?
+Sem mapa, investigue referências e imports diretamente. Sua ausência não determina uma nota fixa de confiança; a confiança deve depender da evidência de cada achado. Um mapa desatualizado também pode induzir conclusões incorretas.
 
-Ao realizar auditorias de código ou investigações de dependências em repositórios legados de sistemas SaaS, o uso do `graphify.md` traz dois benefícios fundamentais baseados em testes empíricos de uso real do toolkit em projetos legados do mercado (como em benchmarks de projetos de empresas parceiras):
+## Como avaliar o efeito do contexto
 
-1. **Redução Média de 82% no Consumo de Tokens**:
-   Em vez de exigir que a IA leia e processe milhares de linhas de código-fonte bruto para mapear chamadas em base de código desconhecida, o `graphify.md` fornece a estrutura topológica das conexões. Isso reduz drasticamente o tamanho do contexto e o custo de execução da análise.
+Este repositório não publica um benchmark reproduzível que sustente os percentuais de economia ou precisão anteriormente mencionados. Para medir no seu cenário:
 
-2. **Aumento da Precisão para 93% (Contra 42% sem contexto)**:
-   Em testes controlados com repositórios legados reais do mercado, a precisão inicial das análises de impacto em cascata ficava em torno de 42% devido a alucinações causadas pela falta de mapeamento global. Ao usar a estrutura do `graphify.md` validada por engenheiros sêniores, a precisão média subiu para 93%.
+- Fixe um commit, um conjunto de perguntas e respostas esperadas revisadas por alguém que conheça a base.
+- Execute as mesmas perguntas com e sem mapa, em sessões independentes, usando o mesmo modelo, versão, configuração e acesso a ferramentas.
+- Registre entrada, saída, tokens de cache quando disponíveis, tempo e custo real separadamente.
+- Avalie afirmações corretas, incorretas, omissões e referências verificáveis. Defina o denominador de cada métrica antes da comparação.
+- Repita as rodadas para observar variação. Registre falhas e resultados desfavoráveis.
+- Publique prompts, saídas e método em uma base que possa ser compartilhada.
 
+| Campo | Registro |
+|---|---|
+| Base e commit | Identificação da amostra |
+| Pergunta e resposta de referência | Definidas antes da execução |
+| Modelo e configuração | Incluindo acesso a ferramentas |
+| Condição | Com mapa / sem mapa |
+| Qualidade | Corretas, incorretas, omissões e referências |
+| Consumo | Tokens de entrada, saída e cache separadamente |
+| Tempo e custo | Medidos, sem converter tokens diretamente em ganho financeiro |
+| Limitações | Cobertura, tamanho da amostra e variação entre rodadas |
 
----
+Economia de tokens não implica melhoria de qualidade. Os resultados de uma base não garantem o mesmo efeito em outras.
 
-## Como usar no fluxo do Toolkit
-
-1. **Gere o Grafo de Dependências**:
-   Siga as instruções do repositório oficial [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) no seu repositório alvo para gerar a síntese de dependências.
-
-2. **Anexe o `graphify.md` na Sessão de IA**:
-   Ao iniciar qualquer um dos prompts do toolkit — especialmente o [`prompts/05-health-check.md`](../prompts/05-health-check.md) —, forneça o conteúdo do `graphify.md` ou referencie o arquivo na sua conversa com a IA.
-
-3. **Verificação de Status no Health Check**:
-   O prompt de Health Check identifica automaticamente a presença do `graphify.md`. Se ausente, o relatório exibirá um aviso de que os achados de dependência em cascata possuem nível de confiança reduzido/médio.
-
----
-
-## Referência Externa
-
-- **Repositório Oficial do Graphify**: [https://github.com/Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)
+Veja também o [prompt de health check](../prompts/05-health-check.md).
