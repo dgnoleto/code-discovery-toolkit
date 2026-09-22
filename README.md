@@ -23,7 +23,9 @@ Copie o prompt [`05-health-check.md`](prompts/05-health-check.md) para analisar 
 Copie o prompt [`06-especificacao-tecnica.md`](prompts/06-especificacao-tecnica.md) para gerar uma **Especificação Técnica & Funcional** baseada exclusivamente no código real. Este passo permite que desenvolvedores e o time de produto identifiquem divergências entre o comportamento real do sistema e a intenção de negócio, consolidando tudo no template [`06-especificacao-tecnica-template.md`](templates/06-especificacao-tecnica-template.md).
 
 ### 5️⃣ Passo 5: Código Morto & Duplicações
-Use os prompts [`02-codigo-morto.md`](prompts/02-codigo-morto.md) e [`03-duplicacoes-redundancias.md`](prompts/03-duplicacoes-redundancias.md) (com o apoio do script local [`scripts/analisar_repositorio.py`](scripts/)) para varrer lógicas obsoletas ou duplicadas e preencher os templates correspondentes.
+Adote o fluxo **deterministic-first, AI-second**: gere primeiro evidências objetivas com ferramentas adequadas e use a IA para validar contexto e falsos positivos. Para duplicações, o [`jscpd`](https://github.com/kucherenko/jscpd) é uma opção leve; veja [`docs/jscpd-guia.md`](docs/jscpd-guia.md). Depois use os prompts [`02-codigo-morto.md`](prompts/02-codigo-morto.md) e [`03-duplicacoes-redundancias.md`](prompts/03-duplicacoes-redundancias.md), com apoio opcional do [`scripts/analisar_repositorio.py`](scripts/), para interpretar os candidatos e preencher os templates correspondentes.
+
+> **Princípio:** ferramentas detectam e medem; a IA interpreta contexto; o time decide.
 
 ### 6️⃣ Passo 6: Relatório Final & Integração de Backlog (Jira / Azure / GitHub)
 Use o prompt [`04-relatorio-final.md`](prompts/04-relatorio-final.md) para consolidar todos os achados em um único documento estratégico ([`templates/04-relatorio-final-template.md`](templates/04-relatorio-final-template.md)) e enviar automaticamente os débitos técnicos para o Jira ou Azure Boards do seu time.
@@ -60,7 +62,7 @@ Para repositórios gigantes (300+ arquivos), consulte o **[Guia de Engenharia de
 | Pasta / Arquivo | Conteúdo | Precisa saber programar? |
 | :--- | :--- | :--- |
 | [`prompts/`](prompts/) | Prompts prontos para colar na IA (Graphify, Mapeamento, Saúde, **Spec Técnica**, etc.) | Não |
-| [`docs/`](docs/) | Guia de [Metodologia](docs/metodologia.md), [Glossário de IA](docs/glossario.md), [Graphify](docs/graphify-guia.md), [Contexto de Negócio](docs/contexto-negocio-guia.md), [Engenharia de Loops & MCP](docs/engenharia-de-loops-guia.md), [Azure DevOps](docs/azure-devops-guia.md) e [Jira](docs/jira-guia.md) | Não |
+| [`docs/`](docs/) | Guia de [Metodologia](docs/metodologia.md), [Glossário de IA](docs/glossario.md), [Graphify](docs/graphify-guia.md), [Contexto de Negócio](docs/contexto-negocio-guia.md), [Engenharia de Loops & MCP](docs/engenharia-de-loops-guia.md), [jscpd / análise determinística](docs/jscpd-guia.md), [Azure DevOps](docs/azure-devops-guia.md) e [Jira](docs/jira-guia.md) | Não |
 | [`examples/`](examples/) | Exemplos reais de relatórios gerados (script e template de mapeamento preenchido) | Não |
 | [`templates/`](templates/) | Templates markdown (relatórios, **Spec Técnica** e **Cards de Backlog com Guardião**), [GitHub Action](templates/github-action-discovery.yml) e [Azure Pipeline](templates/azure-pipelines-discovery.yml) | Não |
 | [`scripts/`](scripts/) | Script Python somente leitura (varredura e envio automatizado para o **Jira**) | Sim (opcional) |
@@ -73,6 +75,7 @@ Para repositórios gigantes (300+ arquivos), consulte o **[Guia de Engenharia de
 1. **Não inventar**: Toda conclusão precisa de evidência direta (código, commit, histórico ou confirmação humana).
 2. **Não refatorar sem autorização**: O objetivo é exclusivamente mapear e documentar. A IA está estritamente proibida de alterar o código de produção ou inflar o projeto.
 3. **Não sair do foco**: Toda rodada de análise tem escopo definido e gates de aprovação humana obrigatórios.
+4. **Deterministic-first, AI-second**: Quando uma ferramenta puder produzir evidência objetiva de forma reproduzível, use-a antes da LLM. Reserve a IA para contexto, falsos positivos e interpretação.
 
 Detalhes completos em [`docs/principios.md`](docs/principios.md).
 
