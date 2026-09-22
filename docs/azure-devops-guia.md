@@ -7,8 +7,8 @@ Este guia ensina como integrar o **Code Discovery Toolkit** a repositórios hosp
 ## 1. Modo Interativo e Agentes (Azure Repos & VS Code / Cursor)
 
 Se a sua equipe utiliza repositórios no **Azure Repos**:
-1. **Persona de IA no VS Code / Cursor**: Copie o arquivo [`templates/AGENTS-discovery-template.md`](../templates/AGENTS-discovery-template.md) para a raiz do seu projeto no Azure Repos com o nome de **`AGENTS.md`** ou **`.cursorrules`**.
-2. **Execução no Azure OpenAI**: Ao colar os prompts da pasta `prompts/` na IA corporativa da sua empresa (conectada ao Azure OpenAI Service), inclua os manuais de contexto (`contexto-produto-template.md`) e o `graphify.md`.
+1. **Persona de IA no VS Code / Cursor**: Copie o arquivo [`workflows/agentic/AGENTS-discovery-template.md`](../workflows/agentic/AGENTS-discovery-template.md) para a raiz do seu projeto no Azure Repos com o nome de **`AGENTS.md`** ou **`.cursorrules`**.
+2. **Execução no Azure OpenAI**: Ao colar os prompts de `workflows/manual/` na IA corporativa da sua empresa (conectada ao Azure OpenAI Service), inclua os manuais de contexto (`contexto-produto-template.md`) e o `graphify.md`.
 
 ---
 
