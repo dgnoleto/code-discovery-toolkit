@@ -99,7 +99,7 @@ Durante a investigação (somente leitura), o agente deve mapear:
 
 ## 4. Estrutura do Relatório de Health Check
 
-O relatório gerado deve seguir o template oficial `templates/05-health-check-template.md`:
+O relatório gerado deve seguir o template oficial `../../templates/05-health-check-template.md`:
 1. Pontos Fortes (O que está bom no código).
 2. Bandeiras Vermelhas & Incompatibilidades de Tipos (com sugestão de correção para cada item).
 3. Oportunidades de Melhoria (Clean Code + Motivações explícitas).

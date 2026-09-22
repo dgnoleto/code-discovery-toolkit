@@ -9,7 +9,7 @@ Este guia é voltado para desenvolvedores e arquitetos que utilizam assistentes 
 Se você quer executar a Engenharia de Loops no seu repositório legado agora, siga estas 3 etapas diretas:
 
 1. **Passo 1 — Copie a Diretiva do Agente**:
-   Copie o arquivo [`templates/AGENTS-discovery-template.md`](../templates/AGENTS-discovery-template.md) para a raiz do seu repositório legado com o nome correspondente à sua ferramenta de IA:
+   Copie o arquivo [`templates/AGENTS-discovery-template.md`](../../templates/AGENTS-discovery-template.md) para a raiz do seu repositório legado com o nome correspondente à sua ferramenta de IA:
    - **Google Antigravity (AGY)** ou **Claude Code**: salve como `AGENTS.md` ou `CLAUDE.md`.
    - **Cursor / Windsurf**: salve como `.cursorrules` ou `.windsurfrules`.
    - **ChatGPT Codex / Canvas**: cole o texto nas *Instruções de Sistema* do seu projeto.
@@ -77,7 +77,7 @@ Você é um agente de discovery autônomo. Sua tarefa é auditar o repositório 
 Instruções para o Loop:
 1. Leia a lista de módulos principais declarada em `graphify.md`.
 2. Para CADA módulo identificado:
-   a. Execute o Health Check (prompts/05-health-check.md) focado exclusivamente nos arquivos daquele módulo.
+   a. Execute o Health Check (../manual/05-health-check.md) focado exclusivamente nos arquivos daquele módulo.
    b. Salve o resultado intermediário no arquivo `discovery/modulos/[nome-do-modulo].md`.
    c. Limpe sua memória intermediária antes de avançar para o próximo módulo.
 3. Não altere nenhum arquivo de código-fonte durante a execução do loop.
@@ -108,7 +108,7 @@ Para evitar que os achados fiquem esquecidos em arquivos Markdown, o agente pode
 Para proteger o time de engenharia, **todo card de backlog criado via IA/MCP DEVE conter obrigatoriamente um Guardião de Validação Humana**:
 
 1. **Tag de Status**: O card deve ser publicado no Jira/Azure Boards com a tag `[Pendente Validação Humana]` ou `[TechnicalDebt-AI]`.
-2. **Checklist Obrigatória do Desenvolvedor**: O corpo da tarefa precisa conter o modelo [`templates/card-backlog-healthcheck-template.md`](../templates/card-backlog-healthcheck-template.md), exigindo que um desenvolvedor humano marque os seguintes itens antes de mover o card para a coluna "Aprovado para Execução":
+2. **Checklist Obrigatória do Desenvolvedor**: O corpo da tarefa precisa conter o modelo [`templates/card-backlog-healthcheck-template.md`](../../templates/card-backlog-healthcheck-template.md), exigindo que um desenvolvedor humano marque os seguintes itens antes de mover o card para a coluna "Aprovado para Execução":
    - `[ ] Fato Verificado (Não é falso positivo)`
    - `[ ] Impacto de Negócio Validado com Produto`
    - `[ ] Solução Técnica Aprovada`

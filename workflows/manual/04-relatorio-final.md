@@ -3,7 +3,7 @@
 Use este prompt para organizar os achados preenchidos em `01-mapeamento-template.md`, `02-codigo-morto-template.md` e `03-duplicacoes-template.md` num relatório final único. Como essa etapa não lê o código de novo (só compila o que já foi levantado), ela não pede confirmação de escopo — só confirma onde salvar o relatório final.
 
 ```
-Você vai me ajudar a organizar os achados de um discovery em um relatório final, usando a estrutura do template em templates/04-relatorio-final-template.md.
+Você vai me ajudar a organizar os achados de um discovery em um relatório final, usando a estrutura do template em ../../templates/04-relatorio-final-template.md.
 
 Contexto: [cole aqui os templates já preenchidos nas etapas anteriores: mapeamento (01), candidatos a código morto (02), duplicações (03)]
 

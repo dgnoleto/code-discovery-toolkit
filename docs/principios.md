@@ -34,3 +34,13 @@ Antes de fazer uma leitura profunda do código (o que consome tempo e tokens), o
 
 Os "Approval Gates" e regras deste toolkit (incluindo o arquivo `AGENTS.md`) dependem de **Prompt Engineering** (obediência do modelo de linguagem às instruções fornecidas). Em execuções agênticas autônomas sem supervisão humana constante (como loops do Claude Code ou Cursor em modo autônomo), a IA pode eventualmente burlar ou ignorar essas diretivas se houver estouro de contexto ou instruções de sistema sobrepostas. Portanto, os gates funcionam como diretrizes comportamentais fortes, mas não substituem proteções físicas de infraestrutura (como permissões de escrita em branches protegidos e testes de CI).
 
+
+## 8. Deterministic-first, AI-second
+
+Sempre que uma verificação puder ser feita de forma objetiva e reproduzível por uma ferramenta adequada, prefira gerar essa evidência antes de consumir contexto de uma LLM.
+
+A ferramenta determinística deve localizar e medir candidatos. A IA entra depois para interpretar contexto, investigar falsos positivos, relacionar o achado à arquitetura e explicar riscos.
+
+Isso não significa confiar cegamente em análise estática. O resultado automatizado continua sendo evidência a validar, especialmente diante de chamadas dinâmicas, reflexão, geração de código, configurações externas e fronteiras entre sistemas.
+
+Em resumo: **máquinas medem primeiro; modelos interpretam depois; pessoas decidem por último.**

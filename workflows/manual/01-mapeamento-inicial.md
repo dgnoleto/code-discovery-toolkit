@@ -26,7 +26,7 @@ ETAPA 4 — Mapeamento Arquitetural
 Regras importantes:
 - Baseie toda conclusão nas evidências do graphify.md e do código fornecido. Se faltar informação, diga "não há evidência suficiente".
 - Não sugira refatorações ou remoções nesta etapa — o objetivo é exclusivamente entender o sistema.
-- Organize sua resposta seguindo o template em templates/01-mapeamento-template.md.
+- Organize sua resposta seguindo o template em ../../templates/01-mapeamento-template.md.
 
 Me entregue:
 1. Um resumo do que o repositório (ou módulo escolhido) faz e com qual nível de confiança.

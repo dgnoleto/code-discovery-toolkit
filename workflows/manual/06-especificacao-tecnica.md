@@ -46,5 +46,5 @@ Examine o código e extraia com precisão:
 
 ### ETAPA 3 — ENTREGA DA ESPECIFICAÇÃO
 
-Apresente o resultado preenchendo o template oficial `templates/06-especificacao-tecnica-template.md`.
+Apresente o resultado preenchendo o template oficial `../../templates/06-especificacao-tecnica-template.md`.
 ```

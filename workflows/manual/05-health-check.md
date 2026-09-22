@@ -96,5 +96,5 @@ Para o escopo confirmado, analise e identifique os seguintes pontos:
 
 ### ETAPA 6 — ENTREGA DO RELATÓRIO
 
-Apresente o resultado preenchendo o template oficial `templates/05-health-check-template.md`.
+Apresente o resultado preenchendo o template oficial `../../templates/05-health-check-template.md`.
 ```
