@@ -324,7 +324,7 @@ def gerar_relatorio(raiz, duplicados, similares, parados, suspeitos, dias_limite
     linhas.append("## Próximos passos sugeridos")
     linhas.append("")
     linhas.append("1. Revisar esta lista com alguém que conheça o contexto do repositório.")
-    linhas.append("2. Usar os prompts da pasta `prompts/` para investigar cada item com mais profundidade.")
+    linhas.append("2. Usar os prompts da pasta `workflows/manual/` para investigar cada item com mais profundidade.")
     linhas.append("3. Preencher o template correspondente na pasta `templates/` (01, 02 ou 03) com as conclusões.")
     linhas.append("4. Só remover, mover ou refatorar algo após autorização explícita do time responsável.")
 
