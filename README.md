@@ -10,7 +10,7 @@ Se você acabou de cair de paraquedas em um sistema legado que ninguém lembra o
 
 ### 1️⃣ Passo 1: Geração do Grafo de Dependências (`graphify.md`)
 Antes de qualquer análise de código, gere a topologia do repositório usando a ferramenta open-source [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) (veja como fazer em [`docs/graphify-guia.md`](docs/graphify-guia.md)).
-> **Por que este é o Passo 1?** Anexar o `graphify.md` nas etapas seguintes reduz o consumo médio de tokens da IA em **82%** e eleva a precisão da análise de impacto de **~42% para 93%** (dados baseados em benchmarks empíricos de projetos reais legados do mercado, mitigando alucinações de contexto longo). Isso garante que a IA entenda a estrutura global do projeto antes de ler o código bruto.
+> **Por que este é o Passo 1?** Anexar o `graphify.md` nas etapas seguintes fornece à IA uma visão estruturada das dependências do repositório antes da leitura do código bruto, ajudando a orientar a investigação e a reduzir análises sem contexto.
 
 ### 2️⃣ Passo 2: Mapeamento Arquitetural & Propósito
 Abra a pasta [`prompts/`](prompts/), copie o conteúdo de [`01-mapeamento-inicial.md`](prompts/01-mapeamento-inicial.md) e cole no seu assistente de IA (Claude, ChatGPT, Cursor, etc.) fornecendo o `graphify.md` gerado no Passo 1.
@@ -88,7 +88,7 @@ Consulte o documento **[`docs/glossario.md`](docs/glossario.md)** para explicaç
 
 ## 🌟 Inspirações e referências
 
-* [**Graphify-Labs/graphify**](https://github.com/Graphify-Labs/graphify): Inspirou a integração de grafos de dependências para análise de impacto. Testes empíricos em projetos reais apontam redução de até 82% no consumo de tokens e aumento da acurácia de ~42% para 93% após validação humana.
+* [**Graphify-Labs/graphify**](https://github.com/Graphify-Labs/graphify): Inspirou a integração de grafos de dependências como apoio à análise de impacto e à compreensão estrutural de sistemas legados.
 * [**llm-council**](https://github.com/karpathy/llm-council) (Andrej Karpathy): Inspirou a ideia de validação cruzada para achados críticos.
 * [**agency-agents-app**](https://github.com/msitarzewski/agency-agents-app): Inspirou o formato `AGENTS.md` e o conceito de Approval Gates.
 
